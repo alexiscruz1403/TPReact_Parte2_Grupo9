@@ -1,0 +1,9 @@
+{
+    "home":{
+        "welcome": "Bienvenido a la página de inicio",
+        "description": "Esta es la página de inicio de nuestra aplicación. Aquí puedes encontrar varios recursos y enlaces a otras secciones de la aplicación.",
+        "button": {
+            "label": "Cambiar idioma"
+        }
+    }
+}

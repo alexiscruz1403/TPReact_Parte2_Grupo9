@@ -1,0 +1,9 @@
+{
+    "home":{
+        "welcome": "Welcome to the Home Page",
+        "description": "This is the home page of our application. Here you can find various resources and links to other sections of the app.",
+        "button": {
+            "label": "Change Language"
+        }
+    }
+}
