@@ -10,6 +10,7 @@ const Home = () => {
     }
 
     return (
+        
         <div className="bg-red-500 p-5 flex flex-col gap-5 rounded-lg shadow-lg text-white">
             <h1>{t('home.welcome')}</h1>
             <p>{t('home.description')}</p>
@@ -17,6 +18,9 @@ const Home = () => {
                 <button onClick={handleClick}>{t('home.button.label')}</button>
             </div>
         </div>
+ 
+
+        
     );
 }
 
