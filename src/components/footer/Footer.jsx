@@ -1,36 +1,35 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-
-import { FaInstagram, FaFacebook, FaEnvelope } from 'react-icons/fa';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 const Footer = () => {
-  return (
-    <footer className="bg-blue-900 text-white py-6 mt-12">
-      <div className="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-6 text-sm">
-        <div>
-          <h2 className="text-lg font-bold mb-2">Rutas del mate</h2>
-          <p>Destinos turísticos en Argentina para matear.</p>
-          <p>Alexis | Sebastian | Araceli</p>
-        </div>
+ 
+    const { t, i18n } = useTranslation();
 
-        <div>
-          <h2 className="text-lg font-bold mb-2">Contacto</h2>
-          <p>Dirección Ficticia 123, Buenos Aires</p>
-          <p> contacto@rutasdelmate.com</p>
-          <p> +54 11 1234-5678</p>
-        </div>
+    const handleClick = () => {
+        const newLang = i18n.language === 'en' ? 'es' : 'en';
+        i18n.changeLanguage(newLang);
+    }
 
-        <div>
-          <h2 className="text-lg font-bold mb-2">Redes Sociales</h2>
-          <div className="flex space-x-4 text-xl">
-            <a href="#" className="hover:text-pink-300"><FaInstagram /></a>
-            <a href="#" className="hover:text-blue-400"><FaFacebook /></a>
-            <a href="mailto:contacto@rutasdelmate.com" className="hover:text-yellow-400"><FaEnvelope /></a>
+  
+    return (
+      <footer className="w-full bg-orange-500 text-white py-6 mt-12">
+        <div className="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-2 gap-6 text-sm">
+          <div>
+            <h2 className="text-ms font-bold mb-2">{t('footer.title')}</h2>
+            <p>{t('footer.description')}</p>
+            <p>{t('footer.students.cruz')}</p>
+            <p>{t('footer.students.antueno')}</p>
+            <p>{t('footer.students.mondaca')}</p>
+          </div>
+  
+          <div>
+            <h2 className="text-lg font-bold mb-2">{t('footer.contact.title')}</h2>
+            <p>{t('footer.contact.address')}</p>
+            <p>{t('footer.contact.email')}</p>
+            <p>{t('footer.contact.phone')}</p>
           </div>
         </div>
-      </div>
-    </footer>
-  );
-};
-
-export default Footer;
+      </footer>
+    );
+  };

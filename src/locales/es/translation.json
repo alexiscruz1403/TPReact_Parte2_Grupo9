@@ -5,5 +5,28 @@
         "button": {
             "label": "Cambiar idioma"
         }
+    },
+    "header": {
+        "title": "Rutas del mate",
+        "favorites": "Favoritos",
+        "language": {
+          "es": "Español",
+          "en": "Inglés"
+        }
+      },
+      "footer": {
+    "title": "Rutas del mate",
+    "description": "Destinos turísticos en Argentina para matear.",
+    "students": {
+      "cruz": "Cruz Jesus Ramon Alexis / FAI-4582",
+      "antueno": "Antueno Pablo Sebastian / FAI-4973",
+      "mondaca": "Mondaca Araceli Andrea / FAI-2147"
+    },
+    "contact": {
+      "title": "Contacto",
+      "address": "Dirección Ficticia 123, Buenos Aires",
+      "email": "contacto@rutasdelmate.com",
+      "phone": "+54 11 1234-5678"
     }
+  }
 }

@@ -5,5 +5,30 @@
         "button": {
             "label": "Change Language"
         }
+    },
+
+    "header": {
+    "title": "Rutas del mate",
+    "favorites": "Favorites",
+    "language": {
+      "es": "Spanish",
+      "en": "English"
     }
+},
+
+"footer": {
+    "title": "Rutas del mate",
+    "description": "Tourist destinations in Argentina to enjoy mate.",
+    "students": {
+      "cruz": "Cruz Jesus Ramon Alexis / FAI-4582",
+      "antueno": "Antueno Pablo Sebastian / FAI-4973",
+      "mondaca": "Mondaca Araceli Andrea / FAI-2147"
+    },
+    "contact": {
+      "title": "Contact",
+      "address": "123 Fictional Street, Buenos Aires",
+      "email": "contact@rutasdelmate.com",
+      "phone": "+54 11 1234-5678"
+    }
+}
 }

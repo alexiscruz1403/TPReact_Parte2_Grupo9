@@ -9,7 +9,7 @@ import Favorites from './pages/Favorites';
 function App() {
   return (
     <Router>
-      
+     
           <Routes>
         <Route path='/' element={<Home/>}></Route>
         <Route path='/details/:id'></Route>
