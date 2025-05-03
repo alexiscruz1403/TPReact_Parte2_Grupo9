@@ -1,32 +1,33 @@
 {
-    "home":{
-        "welcome": "Bienvenido a la página de inicio",
-        "description": "Esta es la página de inicio de nuestra aplicación. Aquí puedes encontrar varios recursos y enlaces a otras secciones de la aplicación.",
-        "button": {
-            "label": "Cambiar idioma"
-        }
-    },
-    "header": {
-        "title": "Rutas del mate",
-        "favorites": "Favoritos",
-        "language": {
-          "es": "Español",
-          "en": "Inglés"
-        }
-      },
-      "footer": {
+  "home": {
+    "title": "Destinos turísticos",
+    "description": "Esta es la página de inicio de nuestra aplicación. Aquí puedes encontrar varios recursos y enlaces a otras secciones de la aplicación.",
+    "empty": "No hay destinos disponibles en este momento."
+  },
+  "header": {
     "title": "Rutas del mate",
-    "description": "Destinos turísticos en Argentina para matear creado por:",
-    "students": {
-      "cruz": "Cruz Jesus Ramon Alexis / FAI-4582",
-      "antueno": "Antueno Pablo Sebastian / FAI-4973",
-      "mondaca": "Mondaca Araceli Andrea / FAI-2147"
+    "favorites": "Favoritos",
+    "button": {
+      "label": "Cambiar idioma"
     },
+    "language": {
+      "es": "Español",
+      "en": "Inglés"
+    }
+  },
+  "favorites":{
+    "title": "Destinos favoritos",
+    "empty": "Aún no has agregado destinos a tus favoritos."
+  },
+  "footer": {
+    "description": "Destinos turísticos en Argentina para matear creado por:",
     "contact": {
-      "title": "Contacto",
-      "address": "Dirección Ficticia 123, Buenos Aires",
-      "email": "contacto@rutasdelmate.com",
-      "phone": "+54 11 1234-5678"
+      "title": "Contacto"
+    }
+  },
+  "card":{
+    "button":{
+      "label": "Ver detalles"
     }
   }
 }

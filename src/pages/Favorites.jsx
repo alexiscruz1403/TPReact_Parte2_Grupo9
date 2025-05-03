@@ -1,28 +1,45 @@
-import React from 'react';
-import Card from "../components/Card/Card";
+import { useState, useEffect } from "react";
+import Header from "../components/header/Header";
+import Footer from "../components/footer/Footer";
+import List from "../components/list/List";
+import { useTranslation } from "react-i18next";
 
-  const Favorites = ({ favoritos, lugares, toggleFavorito }) => {
-    const lugaresFavoritos = lugares.filter(lugar => favoritos.includes(lugar.nombre));
-  
-    if (lugaresFavoritos.length === 0) {
-      return <p className="text-gray-500">No hay destinos favoritos.</p>;
+const Favorites = () => {
+  const { t } = useTranslation();
+  const [favoritos, setFavoritos] = useState(JSON.parse(localStorage.getItem("favoritos")) || []);
+
+  const updateFavoritos = (nombre, estado) => {
+    const storedFavoritos = JSON.parse(localStorage.getItem("favoritos")) || [];
+    if(estado){
+      const nuevoFavorito = storedFavoritos.find((fav) => fav.nombre === nombre);
+      if(!nuevoFavorito){
+        const newFavoritos = [...storedFavoritos, { nombre }];
+        setFavoritos(newFavoritos);
+      }
+    }else{
+      const newFavoritos = storedFavoritos.filter((fav) => fav.nombre !== nombre);
+      setFavoritos(newFavoritos);
     }
+  };
+
+  useEffect(() => {
+    localStorage.setItem("favoritos", JSON.stringify(favoritos));
+  }, [favoritos]);
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-    {lugaresFavoritos.map((lugar) => (
-      <Card
-        key={lugar.nombre}
-        nombre={lugar.nombre}
-        imagen={lugar.imagen}
-        esFavorito={true}
-        toggleFavorito={toggleFavorito}
-        />
-      ))}
-    </div>
+    <>
+      <Header />
+      <main className="flex-grow">
+        <div>
+          <p className="text-3xl font-bold text-center mt-6">
+            {t("favorites.title")}
+          </p>
+          <List items={favoritos} emptyMessage={t("favorites.empty")} actualizarListaFavoritos={updateFavoritos}/>
+        </div>
+      </main>
+      <Footer />
+    </>
   );
 };
 
 export default Favorites;
-
-

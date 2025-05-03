@@ -1,34 +1,33 @@
 {
-    "home":{
-        "welcome": "Welcome to the Home Page",
-        "description": "This is the home page of our application. Here you can find various resources and links to other sections of the app.",
-        "button": {
-            "label": "Change Language"
-        }
-    },
-
-    "header": {
+  "home": {
+    "title": "Touristic destinations",
+    "description": "This is the home page of our application. Here you can find various resources and links to other sections of the app.",
+    "empty": "No destinations available at the moment."
+  },
+  "favorites":{
+    "title": "Favorites destinations",
+    "empty": "You haven't added any destinations to your favorites yet."
+  },
+  "header": {
     "title": "Rutas del mate",
     "favorites": "Favorites",
+    "button": {
+      "label": "Change Language"
+    },
     "language": {
       "es": "Spanish",
       "en": "English"
     }
-},
-
-"footer": {
-    "title": "Rutas del mate",
+  },
+  "footer": {
     "description": "Tourist destinations in Argentina for drinking mate created by",
-    "students": {
-      "cruz": "Cruz Jesus Ramon Alexis / FAI-4582",
-      "antueno": "Antueno Pablo Sebastian / FAI-4973",
-      "mondaca": "Mondaca Araceli Andrea / FAI-2147"
-    },
     "contact": {
-      "title": "Contact",
-      "address": "123 Fictional Street, Buenos Aires",
-      "email": "contact@rutasdelmate.com",
-      "phone": "+54 11 1234-5678"
+      "title": "Contact"
     }
-}
+  },
+  "card":{
+    "button":{
+      "label": "View details"
+    }
+  }
 }
