@@ -1,42 +1,60 @@
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from "react-i18next";
 import Header from "../components/header/Header";
 import Footer from "../components/footer/Footer";
-
-import Destino from '../components/destino/Destino';
+import List from "../components/list/List";
+import { useEffect, useState } from "react";
 
 const Home = () => {
+  const { t } = useTranslation();
+  const [favoritos, setFavoritos] = useState(JSON.parse(localStorage.getItem("favoritos")) || []);
 
-    const { t, i18n } = useTranslation();
-
-    const handleClick = () => {
-        const newLang = i18n.language === 'en' ? 'es' : 'en';
-        i18n.changeLanguage(newLang);
+  const updateFavoritos = (nombre, estado) => {
+    const storedFavoritos = JSON.parse(localStorage.getItem("favoritos")) || [];
+    if(estado){
+      const nuevoFavorito = storedFavoritos.find((fav) => fav.nombre === nombre);
+      if(!nuevoFavorito){
+        const newFavoritos = [...storedFavoritos, { nombre }];
+        setFavoritos(newFavoritos);
+      }
+    }else{
+      const newFavoritos = storedFavoritos.filter((fav) => fav.nombre !== nombre);
+      setFavoritos(newFavoritos);
     }
+  };
 
-    return (
-        <>
-        
-        <Header />
-        <main className="flex-grow">
+  useEffect(() => {
+    localStorage.setItem("favoritos", JSON.stringify(favoritos));
+  }, [favoritos]);
 
-        <div className=" bg-red-500 p-5 flex flex-col gap-5 rounded-lg shadow-lg  text-white">
-            <h1>{t('home.welcome')}</h1>
-            <p>{t('home.description')}</p>
-            <div>
-                <button className= "text-gray-700" onClick={handleClick}>{t('home.button.label')}</button>
-            </div>
-        </div>
-  
+  const lugares = [
+    {
+      nombre: 'Lago Puelo'
+    },
+    {
+      nombre: 'El Bolsón'
+    },
+    {
+      nombre: 'Puerto Madryn'
+    },
+    {
+      nombre: 'Trevelin'
+    }
+  ];
+
+  return (
+    <>
+      <Header />
+      <main className="flex-grow">
         <div>
-  <p className="text-3xl font-bold text-center mt-6">Destinos Turísticos</p>
-  <Destino /> 
-</div>
-
-        </main>
+          <p className="text-3xl font-bold text-center mt-6">
+            {t("home.title")}
+          </p>
+          <List items={lugares} emptyMessage={t("home.empty")} actualizarListaFavoritos={updateFavoritos}/>
+        </div>
+      </main>
       <Footer />
     </>
-        
-    );
-}
+  );
+};
 
 export default Home;
