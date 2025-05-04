@@ -1,3 +1,4 @@
+import React from 'react';
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
@@ -12,7 +13,7 @@ const Header = () => {
   };
 
   return (
-    <header className="w-full top-0 z-50 bg-orange-500 text-white shadow-md py-2">
+    <header className="w-full top-0 z-50 bg-orange-500 text-white py-2 fixed left-0 ">
       <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
         {/* Logo + Home */}
         <div

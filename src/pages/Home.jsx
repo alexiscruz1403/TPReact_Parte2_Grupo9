@@ -44,7 +44,7 @@ const Home = () => {
   return (
     <>
       <Header />
-      <main className="flex-grow">
+      <main className="flex-grow pt-40 ">
         <div>
           <p className="text-3xl font-bold text-center mt-6">
             {t("home.title")}

@@ -18,7 +18,7 @@ const Details = () => {
   return (
     <>
       <Header handleLanguageToggle={handleClick} />
-      <main className="flex-grow p-6">
+      <main className="flex-grow pt-40">
         <h1 className="text-2xl font-bold mb-4">Detalles de {decodeURIComponent(nombre)}</h1>
 
         {imagen && (
