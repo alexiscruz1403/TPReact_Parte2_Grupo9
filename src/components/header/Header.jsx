@@ -16,16 +16,16 @@ const Header = () => {
       <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
         {/* Logo + Home */}
         <div
-          className="flex items-center space-x-4 cursor-pointer"
+        className="hover:text-blue-200 transition"
           onClick={() => navigate("/")}
         >
           <span className="text-xl font-semibold">{t("header.title")}</span>
         </div>
 
         {/* Navegación */}
-        <nav className="flex items-center text-gray-700 space-x-6">
+        <nav className="flex items-center text-gray-700 space-x-6 ">
           <button
-            className="hover:text-blue-300 transition"
+             className="text-gray-700 bg-white text-blue-700 rounded px-2 py-1 hover:text-blue-200 transition focus:outline-none"
             onClick={() => navigate("/favorites")}
           >
             {t("header.favorites")}
@@ -33,7 +33,7 @@ const Header = () => {
 
           {/* Botón para cambiar idioma */}
           <button
-            className="text-gray-700 bg-white text-blue-700 rounded px-2 py-1 focus:outline-none"
+            className="text-gray-700 bg-white text-blue-700 rounded px-2 py-1 hover:text-blue-200 transition focus:outline-none"
             onClick={handleClick}
           >
             {t("header.button.label")}
