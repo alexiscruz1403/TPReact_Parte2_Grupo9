@@ -2,7 +2,10 @@
   "home": {
     "title": "Touristic destinations",
     "description": "This is the home page of our application. Here you can find various resources and links to other sections of the app.",
-    "empty": "No destinations available at the moment."
+    "empty": "No destinations available at the moment.",
+    "search": {
+      "placeholder": "Search by name or province"
+    }
   },
   "favorites":{
     "title": "Favorites destinations",

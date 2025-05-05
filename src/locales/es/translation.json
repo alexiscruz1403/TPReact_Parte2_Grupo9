@@ -2,7 +2,10 @@
   "home": {
     "title": "Destinos turísticos",
     "description": "Esta es la página de inicio de nuestra aplicación. Aquí puedes encontrar varios recursos y enlaces a otras secciones de la aplicación.",
-    "empty": "No hay destinos disponibles en este momento."
+    "empty": "No hay destinos disponibles en este momento.",
+    "search": {
+      "placeholder": "Buscar por nombre o provincia"
+    }
   },
   "header": {
     "title": "Rutas del mate",

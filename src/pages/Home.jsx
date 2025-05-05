@@ -2,6 +2,7 @@ import { useTranslation } from "react-i18next";
 import Header from "../components/header/Header";
 import Footer from "../components/footer/Footer";
 import List from "../components/list/List";
+import SearchInput from "../components/SearchInput/SearchInput";
 import { useEffect, useState } from "react";
 
 const Home = () => {
@@ -28,28 +29,43 @@ const Home = () => {
 
   const lugares = [
     {
-      nombre: 'Lago Puelo'
+      nombre: 'Lago Puelo',
+      provincia: 'Chubut'
     },
     {
-      nombre: 'El Bolsón'
+      nombre: 'El Bolsón',
+      provincia: 'Catamarca'
     },
     {
-      nombre: 'Puerto Madryn'
+      nombre: 'Puerto Madryn',
+      provincia: 'Chubut'
     },
     {
-      nombre: 'Trevelin'
+      nombre: 'Trevelin',
+      provincia: 'Chubut'
     }
   ];
+
+  const [lugaresFiltrados, setLugaresFiltrados] = useState(lugares);
+  const [busqueda, setBusqueda] = useState("");
+
+  const filtrarLugares = () => {
+    const lugaresFiltrados = lugares.filter((lugar) =>
+      lugar.nombre.toLowerCase().includes(busqueda.toLowerCase()) || lugar.provincia.toLowerCase().includes(busqueda.toLowerCase())
+    );
+    setLugaresFiltrados(lugaresFiltrados);
+  }
 
   return (
     <>
       <Header />
-      <main className="flex-grow pt-40 ">
+      <main className="flex-grow">
         <div>
           <p className="text-3xl font-bold text-center mt-6">
             {t("home.title")}
           </p>
-          <List items={lugares} emptyMessage={t("home.empty")} actualizarListaFavoritos={updateFavoritos}/>
+          <SearchInput value={busqueda} onChange={setBusqueda}/>
+          <List items={lugaresFiltrados} emptyMessage={t("home.empty")} actualizarListaFavoritos={updateFavoritos}/>
         </div>
       </main>
       <Footer />
