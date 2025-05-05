@@ -110,7 +110,7 @@ const Details = () => {
   return (
     <>
       <Header handleLanguageToggle={handleClick} />
-      <main className="flex-grow pt-40 px-4">
+      <main className="flex-grow px-4">
         <h1 className="text-2xl font-bold mb-4 text-center">
           Detalles de {decodeURIComponent(nombre)}
         </h1>
