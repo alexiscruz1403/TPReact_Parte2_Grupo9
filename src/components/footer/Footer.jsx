@@ -6,6 +6,7 @@ const Footer = () => {
   const { t } = useTranslation();
 
   return (
+
     <footer className="w-screen bg-orange-500 text-white py-6 text-center flex flex-col items-center">
       <div className="w-full flex justify-center gap-8 text-sm">
         <div className="flex flex-col items-center gap-2">
