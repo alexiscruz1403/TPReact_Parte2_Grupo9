@@ -32,5 +32,8 @@
     "button":{
       "label": "View details"
     }
+  },
+  "loading":{
+    "text": "Loading information..."
   }
 }
