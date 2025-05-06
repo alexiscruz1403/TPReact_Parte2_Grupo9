@@ -32,5 +32,8 @@
     "button":{
       "label": "Ver detalles"
     }
+  },
+  "loading":{
+    "text": "Cargando información..."
   }
 }
