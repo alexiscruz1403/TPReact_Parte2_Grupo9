@@ -116,7 +116,9 @@ const Details = () => {
   return (
     <>
       <Header handleLanguageToggle={handleClick} />
-      <main className="flex-grow px-4 py-8">
+     
+
+      <main className="flex-grow px-4 py-8 ">
         <h1 className="text-2xl font-bold mb-4 text-center">
           Detalles de {decodeURIComponent(nombre)}
         </h1>
@@ -130,6 +132,12 @@ const Details = () => {
             />
           </div>
         )}
+
+<main>
+       <div>
+        <p className="text-2xl text-center mb-2 mt-6"> {t("details.description")}</p>
+       </div>
+       </main>
 
         <div className="mt-4 text-center">
           <p>
@@ -170,7 +178,9 @@ const Details = () => {
           ) : (
             <p>No se pudo obtener el clima.</p>
           )}
+
         </div>
+
 
         {/* Mapa */}
         {data?.centroide && (
@@ -193,6 +203,7 @@ const Details = () => {
           </div>
         )}
       </main>
+     
       <Footer />
     </>
   );

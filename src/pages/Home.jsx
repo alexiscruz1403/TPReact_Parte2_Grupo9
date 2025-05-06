@@ -59,15 +59,19 @@ const Home = () => {
   return (
     <>
       <Header />
-      <main className="flex-grow">
-        <div>
+      <div class="w-screen h-screen bg-[url('https://media.giphy.com/media/B6kCXTy92q6kToxuS0/giphy.gif?cid=ecf05e47seveb6d38g4lvxpxkv47zf50cdkdukgo12bz1dap&ep=v1_gifs_related&rid=giphy.gif&ct=g')] bg-cover bg-center bg-no-repeat bg-fixed relative backdrop-blur-sm">
+
+      <main className="w-full flex-grow justify-center items-center">
+        <div className="flex flex-col items-center justify-center  p-12">
           <p className="text-3xl font-bold text-center mt-6">
             {t("home.title")}
           </p>
           <SearchInput value={busqueda} onChange={setBusqueda}/>
           <List items={lugaresFiltrados} emptyMessage={t("home.empty")} actualizarListaFavoritos={updateFavoritos}/>
         </div>
+        
       </main>
+</div>
       <Footer />
     </>
   );
