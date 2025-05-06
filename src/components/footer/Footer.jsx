@@ -11,7 +11,7 @@ const Footer = () => {
       <div className="max-w-7xl mx-auto px-4 flex flex-wrap justify-center items-center text-sm">
         {/* Desarrollado por */}
         <div className="flex-1 text-center mb-6 md:mb-0">
-          <h2 className="text-lg font-bold mb-2">Rutas del mate</h2>
+          <h2 className="text-lg font-bold mb-2">{t('footer.description')}</h2>
           <p>{t('footer.description')}</p>
           <p>Antueno Pablo Sebastian / FAI-4973</p>
           <p>Cruz Jesus Ramon Alexis / FAI-4582</p>
