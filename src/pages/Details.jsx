@@ -5,6 +5,9 @@ import Header from "../components/header/Header";
 import Footer from "../components/footer/Footer";
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
+import { LoaderCircle } from 'lucide-react';
+
+
 
 const Details = () => {
   const { nombre } = useParams();
@@ -99,8 +102,9 @@ const Details = () => {
     return (
       <>
         <Header handleLanguageToggle={handleClick} />
-        <main className="flex-grow pt-40 px-4 text-center">
+        <main className="flex items-center grap-2 pt-40 px-4 max-w-7xl mx-auto justify-center h-screen">
           <p className="text-xl font-bold">Cargando información...</p>
+          <LoaderCircle className="animate-spin  w-12 h-12 items-center"/>
         </main>
         <Footer />
       </>

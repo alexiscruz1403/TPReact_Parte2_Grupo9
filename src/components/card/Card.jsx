@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { LoaderCircle } from 'lucide-react';
 
 const API_KEY = "71b490fede18d724d47d0ba570379320";
 
@@ -128,7 +129,10 @@ const Card = ({ nombre, cambiarEstadoFavorito }) => {
         }
         </div>
         {/* {!data ? (
-          <p className="p-4 text-gray-500">Cargando...</p>
+          <div>
+  <p className="p-4 text-gray-500">Cargando...</p> 
+  <LoaderCircle className="animate-spin " />
+  </div>
         ) : (
           <div className="p-4">
             <div className="flex justify-between items-center">
