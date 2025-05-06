@@ -166,7 +166,7 @@ const Details = () => {
           )}
         </div>
 
-        <div className="text-center">
+        <div className="text-center bg-grey-100">
           {clima ? (
             <>
               <p><strong>Clima:</strong> {clima.weather[0].description}</p>
@@ -187,7 +187,7 @@ const Details = () => {
             <h2 className="text-xl font-semibold mb-2 text-center">Pronóstico para los próximos días</h2>
             <div className="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-5 gap-4 justify-center">
               {pronostico.map((dia, idx) => (
-                <div key={idx} className="bg-blue-100 p-4 rounded shadow text-center">
+                <div key={idx} className="bg-orange-300 text-white p-4 rounded shadow text-center">
                   <p className="font-semibold">
                     {new Date(dia.dt * 1000).toLocaleDateString("es-ES", {
                       weekday: "long",
@@ -209,7 +209,7 @@ const Details = () => {
         )}
 
         {data?.centroide && (
-          <div className="h-96 w-full max-w-3xl mx-auto mt-8">
+          <div className="h-96 w-full max-w-3xl mx-auto mt-8 ">
             <MapContainer
               center={[data.centroide.lat, data.centroide.lon]}
               zoom={10}
