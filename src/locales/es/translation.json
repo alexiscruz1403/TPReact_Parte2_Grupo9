@@ -32,5 +32,11 @@
     "button":{
       "label": "Ver detalles"
     }
+  },
+  "loading":{
+    "text": "Cargando información..."
+  },
+  "details":{
+    "description": "Viajar por Argentina es una gran oportunidad para reconectar con la naturaleza, descubrir paisajes únicos y vivir experiencias inolvidables. Este lugar seleccionado no solo ofrece un entorno natural imponente, sino también un espacio ideal para relajarse, meditar y disfrutar de la calma del entorno. Ya sea contemplando el paisaje, compartiendo unos mates bajo la sombra de un árbol o degustando las comidas típicas de la región, cada instante se convierte en un recuerdo valioso. Una escapada que combina cultura, tradición y belleza natural."
   }
 }
