@@ -9,16 +9,17 @@ import { LoaderCircle } from "lucide-react";
 
 const Details = () => {
   const { nombre } = useParams();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   const [data, setData] = useState(null);
   const [clima, setClima] = useState(null);
+  const [pronostico, setPronostico] = useState(null);
   const [imagen, setImagen] = useState(null);
   const [userCoords, setUserCoords] = useState(null);
   const [distance, setDistance] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  const openWeatherKey = "71b490fede18d724d47d0ba570379320";
+  const openWeatherKey = "daac899e63939cfea93827d479d1741c";
 
   // Obtener los datos del lugar
   useEffect(() => {
@@ -47,11 +48,24 @@ const Details = () => {
 
         // Obtener clima si hay coordenadas
         if (localidad.centroide) {
+          const { lat, lon } = localidad.centroide;
+
+          // Clima actual
           const climaRes = await fetch(
-            `https://api.openweathermap.org/data/2.5/weather?lat=${localidad.centroide.lat}&lon=${localidad.centroide.lon}&units=metric&lang=es&appid=${openWeatherKey}`
+            `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&lang=es&appid=${openWeatherKey}`
           );
           const climaData = await climaRes.json();
           setClima(climaData);
+
+          // Pronóstico para 5 días (cada 3 horas)
+          const forecastRes = await fetch(
+            `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&units=metric&lang=es&appid=${openWeatherKey}`
+          );
+          const forecastData = await forecastRes.json();
+
+          // Filtrar un dato por día (cada 24h aprox. -> índice cada 8 intervalos)
+          const diario = forecastData.list.filter((_, index) => index % 8 === 0);
+          setPronostico(diario);
         }
 
         setLoading(false);
@@ -116,9 +130,8 @@ const Details = () => {
   return (
     <>
       <Header handleLanguageToggle={handleClick} />
-     
 
-      <main className="flex-grow px-4 py-8 ">
+      <main className="flex-grow px-4 py-8">
         <h1 className="text-2xl font-bold mb-4 text-center">
           Detalles de {decodeURIComponent(nombre)}
         </h1>
@@ -133,11 +146,11 @@ const Details = () => {
           </div>
         )}
 
-<main>
-       <div>
-        <p className="text-2xl text-center mb-2 mt-6"> {t("details.description")}</p>
-       </div>
-       </main>
+        <div>
+          <p className="text-2xl text-center mb-2 mt-6">
+            {t("details.description")}
+          </p>
+        </div>
 
         <div className="mt-4 text-center">
           <p>
@@ -178,11 +191,41 @@ const Details = () => {
           ) : (
             <p>No se pudo obtener el clima.</p>
           )}
-
         </div>
 
+        {pronostico && (
+          <div className="mt-6">
+            <h2 className="text-xl font-semibold mb-2 text-center">
+              Pronóstico para los próximos días
+            </h2>
+            <div className="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-5 gap-4 justify-center">
+              {pronostico.map((dia, idx) => (
+                <div
+                  key={idx}
+                  className="bg-blue-100 p-4 rounded shadow text-center"
+                >
+                  <p className="font-semibold">
+                    {new Date(dia.dt * 1000).toLocaleDateString("es-ES", {
+                      weekday: "long",
+                      day: "numeric",
+                      month: "short",
+                    })}
+                  </p>
+                  <img
+                    src={`https://openweathermap.org/img/wn/${dia.weather[0].icon}@2x.png`}
+                    alt="icono"
+                    className="mx-auto h-12"
+                  />
+                  <p className="capitalize">{dia.weather[0].description}</p>
+                  <p className="text-sm">
+                    Temp: {dia.main.temp.toFixed(1)} °C
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
 
-        {/* Mapa */}
         {data?.centroide && (
           <div className="mt-8 h-96 w-full max-w-3xl mx-auto">
             <MapContainer
@@ -203,7 +246,7 @@ const Details = () => {
           </div>
         )}
       </main>
-     
+
       <Footer />
     </>
   );
