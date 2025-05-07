@@ -2,12 +2,12 @@
   "home": {
     "title": "TOP 10 RUTAS DEL MATE",
     "list": {
-      "title": "Para disfrutar de un viaje en auto acompañado de unos buenos mates y recargar energía vislumbrando paisajes inolvidables.",
-      "description": "Haz clic en una provincia para explorar sus localidades.",
+      "title": "Rutas del Mate recomienda estas provincias como sus favoritas por combinar paisajes imponentes, cultura local vibrante y caminos ideales para recorrer en auto mientras se disfruta de unos buenos mates. Desde los cerros multicolores de Jujuy y Salta, pasando por los viñedos de Mendoza y San Juan, hasta la majestuosidad patagónica de Neuquén, Santa Cruz y Tierra del Fuego, cada destino ofrece experiencias únicas. Córdoba y San Luis destacan por sus sierras, ríos y rutas escénicas, mientras que La Rioja sorprende con formaciones naturales impactantes. Todas estas provincias invitan a viajar lento, detenerse en cada rincón y disfrutar del paisaje con un mate en mano.",
+      "description": "Haz clic en una provincia para obtener más detalles.",
       "empty": "No hay destinos disponibles en este momento."
     },
     "search": {
-      "placeholder": "Buscar por provincia..."
+      "placeholder": "Buscar una provincia..."
     },
     "loading": "Loading provinces..."
   },
@@ -23,7 +23,7 @@
     }
   },
   "favorites":{
-    "title": "Destinos favoritos",
+    "title": "DESTINOS FAVORITOS",
     "empty": "Aún no has agregado destinos a tus favoritos."
   },
   "footer": {

@@ -1,17 +1,18 @@
 {
   "home": {
     "title": "TOP 10 MATE ROUTES",
+
     "list": {
-      "title": "To enjoy a road trip with some good mate and recharge your energy while admiring unforgettable landscapes.",
-      "description": "Click on a province to explore its localities.",
+      "title": "Mate Routes recommends these provinces as its favorites for combining impressive landscapes, vibrant local culture, and ideal roads for traveling by car while enjoying some good mates. From the multicolored hills of Jujuy and Salta, through the vineyards of Mendoza and San Juan, to the majestic Patagonian beauty of Neuquén, Santa Cruz, and Tierra del Fuego, each destination offers unique experiences. Córdoba and San Luis stand out for their mountains, rivers, and scenic routes, while La Rioja surprises with striking natural formations. All these provinces invite you to travel slowly, stop in every corner, and enjoy the landscape with a mate in hand.",
+      "description": "Click on a province for more details.",
       "empty": "No destinations available at the moment."
     },
     "search": {
-      "placeholder": "Search by province..."
+      "placeholder": "Search for a province..."
     }
   },
   "favorites": {
-    "title": "Favorites destinations",
+    "title": "FAVORITES DESTINATIONS",
     "empty": "You haven't added any destinations to your favorites yet."
   },
   "header": {

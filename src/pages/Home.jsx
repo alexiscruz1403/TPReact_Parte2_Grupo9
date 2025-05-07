@@ -1,12 +1,11 @@
 import { useTranslation } from "react-i18next";
+import { fetchProvincias, searchProvincias } from "../services/apiService";
 import Header from "../components/header/Header";
 import Footer from "../components/footer/Footer";
 import List from "../components/list/List";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { LoaderCircle, SearchX } from 'lucide-react';
-
-const API_KEY = "71b490fede18d724d47d0ba570379320";
+import { LoaderCircle, SearchX } from "lucide-react";
 
 const Home = () => {
   const { t } = useTranslation();
@@ -30,44 +29,9 @@ const Home = () => {
   ];
 
   useEffect(() => {
-    const fetchProvincias = async () => {
+    const loadProvincias = async () => {
       try {
-        const response = await fetch(
-          "https://apis.datos.gob.ar/georef/api/provincias?max=24"
-        );
-        const data = await response.json();
-
-        // Filtrar solo las provincias del top 10
-        const provinciasFiltradas = data.provincias.filter((provincia) =>
-          topProvincias.includes(provincia.nombre)
-        );
-
-        // Obtener clima e imágenes para cada provincia
-        const provinciasConDatos = await Promise.all(
-          provinciasFiltradas.map(async (provincia) => {
-            const climaRes = await fetch(
-              `https://api.openweathermap.org/data/2.5/weather?lat=${encodeURIComponent(
-                provincia.centroide.lat
-              )}&lon=${encodeURIComponent(provincia.centroide.lon)}&appid=${API_KEY}&units=metric&lang=es`
-            );
-            const climaData = await climaRes.json();
-
-            const wikiRes = await fetch(
-              `https://en.wikipedia.org/w/api.php?action=query&format=json&origin=*&prop=pageimages&titles=${provincia.nombre}&pithumbsize=400`
-            );
-            const imgData = await wikiRes.json();
-            const page = imgData.query.pages[Object.keys(imgData.query.pages)[0]];
-
-            return {
-              ...provincia,
-              clima: climaData.cod === 200 ? climaData : null,
-              imagen:
-                page.thumbnail?.source ||
-                `https://picsum.photos/seed/${provincia.nombre}/400/300`,
-            };
-          })
-        );
-
+        const provinciasConDatos = await fetchProvincias(topProvincias);
         setProvincias(provinciasConDatos);
       } catch (error) {
         console.error("Error al obtener las provincias:", error);
@@ -76,15 +40,12 @@ const Home = () => {
       }
     };
 
-    fetchProvincias();
+    loadProvincias();
   }, []);
-
-
 
   const handleNavigate = (provincia) => {
     navigate(`/details/${encodeURIComponent(provincia.nombre)}`);
   };
-
 
   const handleSearch = async (e) => {
     const term = e.target.value;
@@ -93,39 +54,7 @@ const Home = () => {
     if (term.length > 3) {
       setLoading(true);
       try {
-        const response = await fetch(
-          `https://apis.datos.gob.ar/georef/api/provincias?nombre=${encodeURIComponent(
-            term
-          )}`
-        );
-        const data = await response.json();
-
-        // Si se encontraron resultados, buscar clima e imágenes
-        const provinciasConDatos = await Promise.all(
-          data.provincias.map(async (provincia) => {
-            const climaRes = await fetch(
-              `https://api.openweathermap.org/data/2.5/weather?lat=${encodeURIComponent(
-                provincia.centroide.lat
-              )}&lon=${encodeURIComponent(provincia.centroide.lon)}&appid=${API_KEY}&units=metric&lang=es`
-            );
-            const climaData = await climaRes.json();
-
-            const wikiRes = await fetch(
-              `https://en.wikipedia.org/w/api.php?action=query&format=json&origin=*&prop=pageimages&titles=${provincia.nombre}&pithumbsize=400`
-            );
-            const imgData = await wikiRes.json();
-            const page = imgData.query.pages[Object.keys(imgData.query.pages)[0]];
-
-            return {
-              ...provincia,
-              clima: climaData.cod === 200 ? climaData : null,
-              imagen:
-                page.thumbnail?.source ||
-                `https://picsum.photos/seed/${provincia.nombre}/400/300`,
-            };
-          })
-        );
-
+        const provinciasConDatos = await searchProvincias(term);
         setSearchResults(provinciasConDatos);
       } catch (error) {
         console.error("Error al buscar provincias:", error);
@@ -133,10 +62,9 @@ const Home = () => {
         setLoading(false);
       }
     } else {
-      setSearchResults([]); // Limpiar resultados si el término es menor a 4 caracteres
+      setSearchResults([]);
     }
   };
-
 
   return (
     <div className="min-h-screen flex flex-col justify-between">
@@ -159,9 +87,9 @@ const Home = () => {
 
           {loading ? (
             <div className="flex gap-1 items-center justify-center">
-              <LoaderCircle className="h-6 w-6 animate-spin"/>
+              <LoaderCircle className="h-6 w-6 animate-spin" />
               <p className="text-center text-lg font-semibold">
-              {t("details.loading")}
+                {t("details.loading")}
               </p>
             </div>
           ) : searchResults.length === 0 && searchTerm.length > 3 ? (

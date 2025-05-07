@@ -1,4 +1,4 @@
-import React, { use, useEffect } from "react";
+
 import { useTranslation } from "react-i18next";
 import { useState } from "react";
 import { Star } from "lucide-react";

@@ -6,7 +6,7 @@ const List = ({ items, emptyMessage, title=null, description, id, onItemClick, o
   return (
     <div className="mb-8 mt-8" id={id}>
 
-      {title && <h3 className="text-2xl mt-6 mb-4">{title}</h3>}
+      {title && <h3 className="text-left mt-6 mb-6">{title}</h3>}
       {description && (
         <div className="flex items-center justify-center mb-6">
           <Lightbulb className="w-5 h-5 text-yellow-500 mr-2" />
