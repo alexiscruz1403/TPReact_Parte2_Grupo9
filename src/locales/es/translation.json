@@ -40,8 +40,8 @@
     "temperature": "Temperatura"
   },
   "details":{
-    "loading": "Cargando información...",
-    "title": "DETALLES DE {{name}}",
+    "loading": "Cargando información, aguarde por favor...",
+    "title": "PROVINCIA DE {{name}}",
     "province": "Provincia",
     "department": "Departamento",
     "latitude": "Latitud",

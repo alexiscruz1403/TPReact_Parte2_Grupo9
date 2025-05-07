@@ -200,7 +200,7 @@ const Details = () => {
       <Header />
       <main className="flex-grow bg-black text-white px-4 py-4 min-h-screen p-8">
         <div classeName="bg-black min-h-screen p-8">
-          <h1 className="text-2xl font-bold text-center">
+          <h1 className="text-2xl font-bold text-center mb-5">
             {t("details.title", { name: nombre.toUpperCase() })}
           </h1>
           {imagen && (
@@ -213,10 +213,7 @@ const Details = () => {
             </div>
           )}
 
-          <div className="text-center space-y-1">
-            <p>
-              <strong>{t("details.province")}:</strong> {nombre}
-            </p>
+          <div className="text-center space-y-1 mt-4">
             <p>
               <strong>{t("details.latitude")}:</strong> {data.centroide.lat}
             </p>
@@ -284,7 +281,7 @@ const Details = () => {
           <List
             items={items}
             emptyMessage={t("details.list.empty")}
-            title={`${t("details.list.title", { name: nombre.toUpperCase() })}`}
+            title={null}
             description={`${t("details.list.description", {
               name: nombre.toUpperCase(),
             })}`}
@@ -300,7 +297,7 @@ const Details = () => {
             )
             : (
                 <button 
-                  className="text-white border border-white"
+                  className="text-white border border-white z"
                   onClick={() => {
                   setFetching(true);
                   fetchLocalidades();

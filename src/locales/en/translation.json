@@ -8,10 +8,9 @@
     },
     "search": {
       "placeholder": "Search by province..."
-    },
-    "loading": "Loading provinces..."
+    }
   },
-  "favorites":{
+  "favorites": {
     "title": "Favorites destinations",
     "empty": "You haven't added any destinations to your favorites yet."
   },
@@ -32,16 +31,16 @@
       "title": "Contact"
     }
   },
-  "card":{
+  "card": {
     "province": "Province",
     "department": "Department",
     "municipality": "Municipality",
     "weather": "Weather",
     "temperature": "Temperature"
   },
-  "details":{
-    "loading": "Loading information...",
-    "title": "DETAILS OF {{name}}",
+  "details": {
+    "loading": "Loading information, please wait...",
+    "title": "PROVINCE OF {{name}}",
     "province": "Province",
     "department": "Department",
     "latitude": "Latitude",
@@ -50,7 +49,7 @@
     "temperature": "Temperature",
     "distance": "You're {{distance}} km away from {{name}}.",
     "forecast": "Forecast for the next days",
-    "list":{
+    "list": {
       "title": "PROVINCE OF {{name}}",
       "description": "Localities of {{name}}",
       "empty": "No localities available at the moment."

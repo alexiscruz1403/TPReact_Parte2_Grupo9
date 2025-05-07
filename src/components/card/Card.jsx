@@ -41,9 +41,9 @@ const Card = ({ id, nombre, provincia = null, departamento = null, municipio = n
             <div className=" h-10 w-10 rounded-md absolute  top-1 right-1 flex items-center justify-center" onClick={handleFavoriteClick}>
               {
                 isFavorite ? (
-                  <Star className="h-5 w-5" fill="yellow" />
+                  <Star className="h-5 w-5" color='black' fill="yellow" />
                 ) : (
-                  <Star className="h-5 w-5" fill=""/>
+                  <Star className="h-5 w-5" color='black' fill=""/>
                 )
               }
             </div>
