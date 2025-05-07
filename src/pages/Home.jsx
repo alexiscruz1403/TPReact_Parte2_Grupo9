@@ -4,7 +4,7 @@ import Footer from "../components/footer/Footer";
 import List from "../components/list/List";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { SearchX } from 'lucide-react';
+import { LoaderCircle, SearchX } from 'lucide-react';
 
 const API_KEY = "71b490fede18d724d47d0ba570379320";
 
@@ -139,7 +139,7 @@ const Home = () => {
 
 
   return (
-    <>
+    <div className="min-h-screen flex flex-col justify-between">
       <Header />
       <main className="flex-grow bg-black text-white">
         <div className="max-w-4xl mx-auto p-4">
@@ -158,9 +158,12 @@ const Home = () => {
           </div>
 
           {loading ? (
-            <p className="text-center mt-6 text-lg font-semibold">
-              {t("home.loading")}
-            </p>
+            <div className="flex gap-1 items-center justify-center">
+              <LoaderCircle className="h-6 w-6 animate-spin"/>
+              <p className="text-center text-lg font-semibold">
+                {t("home.loading")}
+              </p>
+            </div>
           ) : searchResults.length === 0 && searchTerm.length > 3 ? (
             <div className="flex flex-col items-center mt-6">
               <SearchX className="text-gray-500 text-4xl mb-2" />
@@ -181,7 +184,7 @@ const Home = () => {
         </div>
       </main>
       <Footer />
-    </>
+    </div>
   );
 };
 

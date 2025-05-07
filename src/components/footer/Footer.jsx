@@ -7,7 +7,7 @@ const Footer = () => {
 
   return (
 
-    <footer className="w-full bg-orange-500 text-black py-6 mt-12 text-center  items-center">
+    <footer className="w-full bg-orange-500 text-black py-6 text-center items-center">
       <div className="max-w-7xl mx-auto px-4 flex flex-wrap justify-center items-center text-sm">
         {/* Desarrollado por */}
         <div className="flex-1 text-center mb-6 md:mb-0">
