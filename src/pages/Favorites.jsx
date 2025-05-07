@@ -25,7 +25,7 @@ const Favorites = () => {
   }, [favoritos]);
 
   return (
-    <>
+    <div className="flex flex-col justify-between min-h-screen">
       <Header />
       <main className="flex-grow bg-black text-white">
         <div>
@@ -36,7 +36,7 @@ const Favorites = () => {
         </div>
       </main>
       <Footer />
-    </>
+    </div>
   );
 };
 
