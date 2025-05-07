@@ -1,11 +1,15 @@
 {
   "home": {
-    "title": "Touristic destinations",
-    "description": "This is the home page of our application. Here you can find various resources and links to other sections of the app.",
-    "empty": "No destinations available at the moment.",
+    "title": "TOP 10 MATE ROUTES",
+    "list": {
+      "title": "To enjoy a road trip with some good mate and recharge your energy while admiring unforgettable landscapes.",
+      "description": "Click on a province to explore its localities.",
+      "empty": "No destinations available at the moment."
+    },
     "search": {
-      "placeholder": "Search by name or province"
-    }
+      "placeholder": "Search by province..."
+    },
+    "loading": "Loading provinces..."
   },
   "favorites":{
     "title": "Favorites destinations",
@@ -29,15 +33,27 @@
     }
   },
   "card":{
-    "button":{
-      "label": "View details"
-    }
-  },
-  "loading":{
-    "text": "Loading information..."
+    "province": "Province",
+    "department": "Department",
+    "municipality": "Municipality",
+    "weather": "Weather",
+    "temperature": "Temperature"
   },
   "details":{
-    "description": "Traveling through Argentina is a wonderful opportunity to reconnect with nature, discover unique landscapes, and live unforgettable experiences. This selected destination not only offers a breathtaking natural setting but also the perfect space to relax, meditate, and enjoy the peace of the surroundings. Whether it's admiring the view, sharing some mate under the shade of a tree, or tasting the region’s traditional dishes, every moment becomes a cherished memory. An escape that blends culture, tradition, and natural beauty."
+    "loading": "Loading information...",
+    "title": "DETAILS OF {{name}}",
+    "province": "Province",
+    "department": "Department",
+    "latitude": "Latitude",
+    "longitude": "Longitude",
+    "weather": "Weather",
+    "temperature": "Temperature",
+    "distance": "You're {{distance}} km away from {{name}}.",
+    "forecast": "Forecast for the next days",
+    "list":{
+      "title": "PROVINCE OF {{name}}",
+      "description": "Localities of {{name}}",
+      "empty": "No localities available at the moment."
+    }
   }
-
 }

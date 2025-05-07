@@ -2,7 +2,7 @@ import React from "react";
 import Card from "../card/Card";
 import { Lightbulb } from "lucide-react";
 
-const List = ({ items, emptyMessage, title=null, description, id, onItemClick }) => {
+const List = ({ items, emptyMessage, title=null, description, id, onItemClick, onFavoriteClick }) => {
   return (
     <div className="mb-8" id={id}>
 
@@ -18,11 +18,15 @@ const List = ({ items, emptyMessage, title=null, description, id, onItemClick })
           {items.map((item) => (
             <Card
               key={item.id}
+              id={item.id}
               nombre={item.nombre}
-              // provincia={item.provincia}
+              departamento={item.departamento}
+              municipio={item.municipio}
+              provincia={item.provincia}
               clima={item.clima}
               imagen={item.imagen}
               onClick={() => onItemClick(item)}
+              onFavoriteClick={onFavoriteClick}
             />
           ))}
         </div>
