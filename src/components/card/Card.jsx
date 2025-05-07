@@ -1,7 +1,7 @@
 import React from "react";
 
 const Card = ({ nombre, provincia = null, clima, imagen, onClick }) => {
-  // Truncar el nombre si excede los 20 caracteres
+  
   const nombreTruncado = nombre.length > 20 ? `${nombre.slice(0, 20)}...` : nombre;
 
   return (
