@@ -27,7 +27,7 @@ const Favorites = () => {
   return (
     <>
       <Header />
-      <main className="flex-grow">
+      <main className="flex-grow bg-black text-white">
         <div>
           <p className="text-3xl font-bold text-center mt-6">
             {t("favorites.title")}

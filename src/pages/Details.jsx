@@ -182,9 +182,9 @@ const Details = () => {
     return (
       <>
         <Header />
-        <main className="flex justify-center items-center h-80 gap-2 text-xl">
+        <main className="flex justify-centerbg-grey-200 bg-black text-white items-center h-80 gap-2 text-xl">
           <LoaderCircle className="animate-spin" />
-          <p className="font-bold">{t("details.loading")}</p>
+          <p className="font-bold items-center">{t("details.loading")}</p>
         </main>
         <Footer />
       </>
@@ -194,7 +194,8 @@ const Details = () => {
   return (
     <>
       <Header />
-      <main className="flex-grow px-4 py-4">
+      <main className="flex-grow bg-black text-white px-4 py-4 min-h-screen p-8">
+        <div classeName="bg-black min-h-screen p-8">
         <h1 className="text-2xl font-bold text-center">
           {t("details.title", { name: nombre.toUpperCase() })}
         </h1>
@@ -310,18 +311,20 @@ const Details = () => {
           id="localidades"
           onFavoriteClick={changeFavoritesState}
         />
-        <button
+        <button 
+        className="text-black"
           onClick={() => {
             setFetching(true);
             fetchLocalidades();
           }}
         >
           {fetching ? (
-            <LoaderCircle className="animate-spin h-8 w-8" />
+            <LoaderCircle className="animate-spin text-black h-8 w-8" />
           ) : (
             "Cargar mas"
           )}
         </button>
+        </div>
       </main>
       <Footer />
     </>

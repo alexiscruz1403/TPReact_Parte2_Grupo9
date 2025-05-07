@@ -141,7 +141,7 @@ const Home = () => {
   return (
     <>
       <Header />
-      <main className="flex-grow">
+      <main className="flex-grow bg-black text-white">
         <div className="max-w-4xl mx-auto p-4">
           <h1 className="text-3xl font-bold text-center mt-6">
             {t("home.title")}

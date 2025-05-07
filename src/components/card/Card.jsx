@@ -27,23 +27,23 @@ const Card = ({ id, nombre, provincia = null, departamento = null, municipio = n
 
   return (
     <div
-      className="relative p-4 bg-white rounded-lg shadow-md cursor-pointer hover:bg-gray-100 transition"
+      className="relative p-4 bg-orange-300 rounded-lg shadow-md cursor-pointer hover:bg-gray-100 transition"
       onClick={handleClick}
     >
       {imagen && <img src={imagen} alt={nombre} className="w-full h-48 object-cover rounded-t-lg" />}
-      <div className="p-4">
+      <div className="p-4 ">
         <h3 className="text-lg font-semibold text-black">{nombreTruncado}</h3>
         {provincia && departamento && municipio && (
           <>
             <p className="text-sm text-gray-800">{t("card.province")}: {provincia}</p>
             <p className="text-sm text-gray-800">{t("card.department")}: {departamento}</p>
             <p className="text-sm text-gray-800">{t("card.municipality")}: {municipio}</p>
-            <div className="bg-black h-10 w-10 rounded-md absolute top-1 right-1 flex items-center justify-center" onClick={handleFavoriteClick}>
+            <div className=" h-10 w-10 rounded-md absolute  top-1 right-1 flex items-center justify-center" onClick={handleFavoriteClick}>
               {
                 isFavorite ? (
-                  <Star className="h-5 w-5" fill="white"/>
+                  <Star className="h-5 w-5" fill="yellow" />
                 ) : (
-                  <Star className="h-5 w-5"/>
+                  <Star className="h-5 w-5" fill=""/>
                 )
               }
             </div>
