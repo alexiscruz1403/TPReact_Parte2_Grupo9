@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import Header from "../components/header/Header";
@@ -8,24 +8,25 @@ import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import { LoaderCircle } from "lucide-react";
 
+const openWeatherKey = "71b490fede18d724d47d0ba570379320";
+
 const Details = () => {
   const { nombre } = useParams();
   const [localidades, setLocalidades] = useState([]);
-  const [loading, setLoading] = useState(true);
   const { t } = useTranslation();
   const [nextFetch, setNextFetch] = useState(0);
   const [items, setItems] = useState([]);
   const firstFetch = useRef(false);
   const [fetching, setFetching] = useState(false);
-
+  
   const [data, setData] = useState(null);
-  const [clima, setClima] = useState(null);
+  // const [clima, setClima] = useState(null);
   const [pronostico, setPronostico] = useState(null);
   const [imagen, setImagen] = useState(null);
-  const [userCoords, setUserCoords] = useState(null);
+  // const [userCoords, setUserCoords] = useState(null);
   const [distance, setDistance] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-  const openWeatherKey = "71b490fede18d724d47d0ba570379320";
 
   const fetchLocalidades = async () => {
     try {
@@ -111,10 +112,12 @@ const Details = () => {
         const res = await fetch(
           `https://apis.datos.gob.ar/georef/api/localidades?provincia=${nombre}&max=1`
         );
-        const json = await res.json();
-        const localidad = json.localidades[0];
-        if (!localidad) throw new Error("Lugar no encontrado");
-        console.log("Localidad:", localidad);
+        const data = await res.json();
+        if (data.total === 0) {
+          navigate("/not-found", { replace: true });
+          return;
+        }
+        const localidad = data.localidades[0];
         setData(localidad);
 
         // Fetch imagen
@@ -253,10 +256,6 @@ const Details = () => {
                       alt="icono"
                       className="mx-auto h-12"
                     />
-                    <p className="capitalize">{dia.weather[0].description}</p>
-                    <p className="text-sm">
-                      Temp: {dia.main.temp.toFixed(1)} °C
-                    </p>
                   </div>
                 ))}
               </div>

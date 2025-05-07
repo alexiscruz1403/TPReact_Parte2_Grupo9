@@ -12,7 +12,6 @@ const Footer = () => {
         {/* Desarrollado por */}
         <div className="flex-1 text-center mb-6 md:mb-0">
           <h2 className="text-lg font-bold mb-2">{t('footer.description')}</h2>
-          <p>{t('footer.description')}</p>
           <p>Antueno Pablo Sebastian / FAI-4973</p>
           <p>Cruz Jesus Ramon Alexis / FAI-4582</p>
           <p>Mondaca Araceli Andrea / FAI-2147</p>
