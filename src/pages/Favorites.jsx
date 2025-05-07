@@ -7,30 +7,22 @@ import { useTranslation } from "react-i18next";
 const Favorites = () => {
   const { t } = useTranslation();
   const [favoritos, setFavoritos] = useState(JSON.parse(localStorage.getItem("favoritos")) || []);
-  const [cargandoFavoritos, setCargandoFavoritos] = useState(true);
 
-  const updateFavoritos = (nombre, estado) => {
+  const updateFavoritos = (localidad) => {
     const storedFavoritos = JSON.parse(localStorage.getItem("favoritos")) || [];
-    if(estado){
-      const nuevoFavorito = storedFavoritos.find((fav) => fav.nombre === nombre);
-      if(!nuevoFavorito){
-        const newFavoritos = [...storedFavoritos, { nombre }];
-        setFavoritos(newFavoritos);
-      }
-    }else{
-      const newFavoritos = storedFavoritos.filter((fav) => fav.nombre !== nombre);
-      setFavoritos(newFavoritos);
+     if(storedFavoritos.some((item) => item.id === localidad.id)) {
+       const nuevosFavoritos = storedFavoritos.filter((item) => item.id !== localidad.id);
+      setFavoritos(nuevosFavoritos);
+    }
+    else {
+      const nuevosFavoritos = [...storedFavoritos, localidad];
+     setFavoritos(nuevosFavoritos);
     }
   };
 
   useEffect(() => {
     localStorage.setItem("favoritos", JSON.stringify(favoritos));
   }, [favoritos]);
-
-  useEffect(() => {
-    // Llamada a la API para obtener los favoritos
-    setCargandoFavoritos(false);
-  });
 
   return (
     <>
@@ -40,7 +32,7 @@ const Favorites = () => {
           <p className="text-3xl font-bold text-center mt-6">
             {t("favorites.title")}
           </p>
-          <List items={favoritos} emptyMessage={t("favorites.empty")} isLoading={cargandoFavoritos} actualizarListaFavoritos={updateFavoritos}/>
+          <List items={favoritos} emptyMessage={t("favorites.empty")} onFavoriteClick={updateFavoritos}/>
         </div>
       </main>
       <Footer />

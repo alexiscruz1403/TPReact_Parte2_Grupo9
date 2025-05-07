@@ -1,11 +1,15 @@
 {
   "home": {
-    "title": "Destinos turísticos",
-    "description": "Esta es la página de inicio de nuestra aplicación. Aquí puedes encontrar varios recursos y enlaces a otras secciones de la aplicación.",
-    "empty": "No hay destinos disponibles en este momento.",
+    "title": "TOP 10 RUTAS DEL MATE",
+    "list": {
+      "title": "Para disfrutar de un viaje en auto acompañado de unos buenos mates y recargar energía vislumbrando paisajes inolvidables.",
+      "description": "Haz clic en una provincia para explorar sus localidades.",
+      "empty": "No hay destinos disponibles en este momento."
+    },
     "search": {
-      "placeholder": "Buscar por nombre o provincia"
-    }
+      "placeholder": "Buscar por provincia..."
+    },
+    "loading": "Loading provinces..."
   },
   "header": {
     "title": "Rutas del mate",
@@ -29,14 +33,28 @@
     }
   },
   "card":{
-    "button":{
-      "label": "Ver detalles"
-    }
-  },
-  "loading":{
-    "text": "Cargando información..."
+    "province": "Provincia",
+    "department": "Departamento",
+    "municipality": "Municipio",
+    "weather": "Clima",
+    "temperature": "Temperatura"
   },
   "details":{
-    "description": "Viajar por Argentina es una gran oportunidad para reconectar con la naturaleza, descubrir paisajes únicos y vivir experiencias inolvidables. Este lugar seleccionado no solo ofrece un entorno natural imponente, sino también un espacio ideal para relajarse, meditar y disfrutar de la calma del entorno. Ya sea contemplando el paisaje, compartiendo unos mates bajo la sombra de un árbol o degustando las comidas típicas de la región, cada instante se convierte en un recuerdo valioso. Una escapada que combina cultura, tradición y belleza natural."
+    "loading": "Cargando información...",
+    "title": "DETALLES DE {{name}}",
+    "province": "Provincia",
+    "department": "Departamento",
+    "latitude": "Latitud",
+    "longitude": "Longitud",
+    "weather": "Clima",
+    "temperature": "Temperatura",
+    "distance": "Estás a {{distance}} km de {{name}}.",
+    "description": "Localidades de {{name}}",
+    "forecast": "Pronóstico para los próximos días",
+    "list":{
+      "title": "PROVINCIA DE {{name}}",
+      "description": "Localidades de {{name}}",
+      "empty": "No hay localidades disponibles en este momento."
+    }
   }
 }
