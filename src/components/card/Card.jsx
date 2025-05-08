@@ -35,9 +35,15 @@ const Card = ({ id, name, province = null, department = null, municipality = nul
         <h3 className="text-lg font-semibold  ">{truncatedName}</h3>
         {province && department && municipality && (
           <>
-            <p className="text-sm ">{t("card.province")}: {province}</p>
-            <p className="text-sm ">{t("card.department")}: {department}</p>
-            <p className="text-sm ">{t("card.municipality")}: {municipality}</p>
+            <p className="text-sm ">
+              {`${t("card.province")}: ${province === "empty" ? t("details.missing.province") : province}`}
+            </p>
+            <p className="text-sm ">
+              {`${t("card.department")}: ${department === "empty" ? t("details.missing.department") : department}`}
+            </p>
+            <p className="text-sm ">
+              {`${t("card.municipality")}: ${municipality === "empty" ? t("details.missing.municipality") : municipality}`}
+            </p>
             <div className=" h-10 w-10 rounded-md absolute  top-1 right-1 flex items-center justify-center" onClick={handleFavoriteClick}>
               {
                 isFavorite ? (

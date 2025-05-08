@@ -17,9 +17,9 @@ export const fetchProvinceData = async (name, capitals, navigate) => {
       name: locality.nombre,
       centroide: locality.centroide,
       id: locality.id,
-      province: locality.provincia?.nombre || "Sin provincia",
-      department: locality.departamento?.nombre || "Sin departamento",
-      municipality: locality.municipio?.nombre || "Sin municipio",
+      province: locality.provincia?.nombre || "empty",
+      department: locality.departamento?.nombre || "empty",
+      municipality: locality.municipio?.nombre || "empty",
     };
   } catch (error) {
     console.error("Error al obtener datos de la provincia:", error);
@@ -88,9 +88,9 @@ export const fetchLocalityDetails = async (localities, t) => {
 
         return {
           name: detailedLocality.nombre,
-          department: detailedLocality.departamento?.nombre || t("details.missing.department"),
-          municipality: detailedLocality.municipio?.nombre || t("details.missing.municipality"),
-          province: detailedLocality.provincia?.nombre || t("details.missing.province"),
+          department: detailedLocality.departamento?.nombre || "empty",
+          municipality: detailedLocality.municipio?.nombre || "empty",
+          province: detailedLocality.provincia?.nombre || "empty",
           id: detailedLocality.id,
           weather: detailedLocality.clima || null,
           forecast: detailedLocality.pronostico || null,
