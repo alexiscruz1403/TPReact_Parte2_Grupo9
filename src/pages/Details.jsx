@@ -232,13 +232,13 @@ const Details = () => {
               {
                 fetching 
                 ? (
-                  <button className="px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-900 hover:bg-gray-700 dark:hover:bg-gray-700 transition" disabled>
+                  <button className="px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-900 hover:bg-gray-700 dark:hover:bg-gray-700 transition cursor-not-allowed" disabled>
                     <LoaderCircle className="animate-spin text-gray-900 dark:text-gray-400 h-8 w-8" />
                   </button>
                 ) 
                 : (
                   <button
-                    className="px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-900 hover:bg-gray-700 dark:hover:bg-gray-700 transition"
+                    className="px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-900 hover:bg-gray-700 dark:hover:bg-gray-700 transition cursor-pointer"
                     onClick={handleLoadMoreClick}
                   >
                     {t("details.button.load")}
