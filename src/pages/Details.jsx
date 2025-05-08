@@ -302,12 +302,12 @@ const Details = () => {
               />
               {
                 fetching ? (
-                  <button className="text-white cursor-not-allowed" disabled>
-                    <LoaderCircle className="animate-spin text-white h-8 w-8" />
+                  <button className="text-black cursor-not-allowed" disabled>
+                    <LoaderCircle className="animate-spin text-black h-8 w-8" />
                   </button>
                 ) : (
                   <button
-                    className="text-white border border-white z"
+                    className="text-black border border-white z"
                     onClick={fetchLocalidades}
                   >
                     {t("details.button.load")}

@@ -11,7 +11,6 @@
 ## Explicación de la aplicación
 
 
-
 ## Instrucciones de instalacion
 
 * Instalar Node.js
@@ -43,3 +42,6 @@ En la terminal, ejecutar el comando: npm run dev o npm start
 * Abrir la página en el navegador
 
 En tu navegador, busca la url: http://localhost:5173
+ 
+> ⚠️ **Nota importante:**  
+> Si el clima no se muestra, puede deberse a un problema con la API de [OpenWeatherMap](https://home.openweathermap.org/). Es posible que ya se haya superado el límite de uso gratuito.

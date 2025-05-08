@@ -27,17 +27,17 @@ const Card = ({ id, nombre, provincia = null, departamento = null, municipio = n
 
   return (
     <div
-      className="relative p-4 bg-orange-300 rounded-lg shadow-md cursor-pointer hover:bg-gray-100 transition"
+      className="relative p-4 bg-orange-300 text-white rounded-lg shadow-md cursor-pointer hover:bg-gray-100 transition"
       onClick={handleClick}
     >
       {imagen && <img src={imagen} alt={nombre} className="w-full h-48 object-cover rounded-t-lg" />}
       <div className="p-4 ">
-        <h3 className="text-lg font-semibold text-black">{nombreTruncado}</h3>
+        <h3 className="text-lg font-semibold text-white">{nombreTruncado}</h3>
         {provincia && departamento && municipio && (
           <>
-            <p className="text-sm text-gray-800">{t("card.province")}: {provincia}</p>
-            <p className="text-sm text-gray-800">{t("card.department")}: {departamento}</p>
-            <p className="text-sm text-gray-800">{t("card.municipality")}: {municipio}</p>
+            <p className="text-sm text-white">{t("card.province")}: {provincia}</p>
+            <p className="text-sm text-white">{t("card.department")}: {departamento}</p>
+            <p className="text-sm text-white">{t("card.municipality")}: {municipio}</p>
             <div className=" h-10 w-10 rounded-md absolute  top-1 right-1 flex items-center justify-center" onClick={handleFavoriteClick}>
               {
                 isFavorite ? (
@@ -52,10 +52,10 @@ const Card = ({ id, nombre, provincia = null, departamento = null, municipio = n
         }
         {clima && (
           <div className="mt-2">
-            <p className="text-gray-800">
+            <p className="text-white">
               <strong>{t("card.weather")}:</strong> {clima.weather[0].description}
             </p>
-            <p className="text-gray-800">
+            <p className="text-white">
               <strong>{t("card.temperature")}</strong> {clima.main.temp} °C
             </p>
           </div>
