@@ -1,7 +1,6 @@
-import React from 'react';
-import { CloudOff } from 'lucide-react';
 import Header from '../components/header/Header';
 import Footer from '../components/footer/Footer';
+import { CloudOff } from 'lucide-react';
 
 const NotFound = () => {
   return (

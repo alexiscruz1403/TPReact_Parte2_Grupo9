@@ -1,52 +1,64 @@
-export const fetchProvincias = async (topProvincias) => {
+export const fetchProvinces = async (topProvinces) => {
     const response = await fetch("https://apis.datos.gob.ar/georef/api/provincias?max=24");
     const data = await response.json();
   
     // Filtra provincias top 10
-    const provinciasFiltradas = data.provincias.filter((provincia) =>
-      topProvincias.includes(provincia.nombre)
+    const filteredProvinces = data.provincias.filter((province) =>
+      topProvinces.includes(province.nombre)
     );
   
     // Fetch imágenes para cada provincia
-    const provinciasConDatos = await Promise.all(
-      provinciasFiltradas.map(async (provincia) => {
-        const wikiRes = await fetch(
-          `https://en.wikipedia.org/w/api.php?action=query&format=json&origin=*&prop=pageimages&titles=${provincia.nombre}&pithumbsize=400`
+    const provincesData = await Promise.all(
+      filteredProvinces.map(async (province) => {
+        const wikiResponse = await fetch(
+          `https://en.wikipedia.org/w/api.php?action=query&format=json&origin=*&prop=pageimages&titles=${province.nombre}&pithumbsize=400`
         );
-        const imgData = await wikiRes.json();
+        const imgData = await wikiResponse.json();
         const page = imgData.query.pages[Object.keys(imgData.query.pages)[0]];
+
+        const provinceDataStructure = {
+          id: province.id,
+          name: province.nombre,
+          centroide: province.centroide
+        }
   
         return {
-          ...provincia,
-          imagen: page.thumbnail?.source || `https://picsum.photos/seed/${provincia.nombre}/400/300`,
+          ...provinceDataStructure,
+          image: page.thumbnail?.source || `https://picsum.photos/seed/${province.nombre}/400/300`,
         };
       })
     );
   
-    return provinciasConDatos;
+    return provincesData;
   };
   
-  export const searchProvincias = async (term) => {
+  export const searchProvinces = async (term) => {
     const response = await fetch(
       `https://apis.datos.gob.ar/georef/api/provincias?nombre=${encodeURIComponent(term)}`
     );
     const data = await response.json();
   
     // Fetch imágenes para cada provincia
-    const provinciasConDatos = await Promise.all(
-      data.provincias.map(async (provincia) => {
-        const wikiRes = await fetch(
-          `https://en.wikipedia.org/w/api.php?action=query&format=json&origin=*&prop=pageimages&titles=${provincia.nombre}&pithumbsize=400`
+    const provincesData = await Promise.all(
+      data.provincias.map(async (province) => {
+        const wikiResponse = await fetch(
+          `https://en.wikipedia.org/w/api.php?action=query&format=json&origin=*&prop=pageimages&titles=${province.nombre}&pithumbsize=400`
         );
-        const imgData = await wikiRes.json();
+        const imgData = await wikiResponse.json();
         const page = imgData.query.pages[Object.keys(imgData.query.pages)[0]];
+
+        const provinceDataStructure = {
+          id: province.id,
+          name: province.nombre,
+          centroide: province.centroide
+        }
   
         return {
-          ...provincia,
-          imagen: page.thumbnail?.source || `https://picsum.photos/seed/${provincia.nombre}/400/300`,
+          ...provinceDataStructure,
+          image: page.thumbnail?.source || `https://picsum.photos/seed/${province.nombre}/400/300`,
         };
       })
     );
   
-    return provinciasConDatos;
+    return provincesData;
   };

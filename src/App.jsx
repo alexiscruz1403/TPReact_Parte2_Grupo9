@@ -11,7 +11,7 @@ function App() {
     <Router>
         <Routes>
         <Route path='/' element={<Home/>}></Route>
-        <Route path='/details/:nombre' element={<Details/>}></Route>
+        <Route path='/details/:name' element={<Details/>}></Route>
         <Route path='/favorites' element={<Favorites/>}></Route>
         <Route path="*" element={<NotFound />} /> {/* Ruta comodín para el error 404 */}
       </Routes>

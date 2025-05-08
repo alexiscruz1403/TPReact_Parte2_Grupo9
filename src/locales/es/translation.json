@@ -59,6 +59,11 @@
       "description": "Localidades de {{name}}",
       "empty": "No hay localidades disponibles en este momento."
     },
+    "missing":{
+      "micipality": "Sin municipio",
+      "department": "Sin departamento",
+      "province": "Sin provincia"
+    },
     "button": {
       "load": "Cargar más"
     }
