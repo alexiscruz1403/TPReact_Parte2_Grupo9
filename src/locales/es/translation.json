@@ -60,7 +60,7 @@
       "empty": "No hay localidades disponibles en este momento."
     },
     "missing":{
-      "micipality": "Sin municipio",
+      "municipality": "Sin municipio",
       "department": "Sin departamento",
       "province": "Sin provincia"
     },

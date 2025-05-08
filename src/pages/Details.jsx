@@ -7,8 +7,12 @@ import { useTranslation } from "react-i18next";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import { LoaderCircle } from "lucide-react";
-
-const openWeatherKey = "71b490fede18d724d47d0ba570379320";
+import {
+  fetchProvinceData,
+  fetchProvinceImage,
+  fetchLocalities,
+  fetchLocalityDetails,
+} from "../services/apiDetailsService";
 
 const capitals = {
   "Buenos Aires": "La Plata",
@@ -34,7 +38,7 @@ const capitals = {
   "Santiago del Estero": "Santiago del Estero",
   "Tierra del Fuego, Antártida e Islas del Atlántico Sur": "Ushuaia",
   "Tucumán": "San Miguel de Tucumán",
-  "Ciudad Autónoma de Buenos Aires": "Buenos Aires"
+  "Ciudad Autónoma de Buenos Aires": "Buenos Aires",
 };
 
 const Details = () => {
@@ -52,75 +56,29 @@ const Details = () => {
 
   const navigate = useNavigate();
 
-  const fetchProvinceData = async () => {
-    try {
-      // Fetch localidad principal
-      const res = await fetch(
-        `https://apis.datos.gob.ar/georef/api/localidades?provincia=${name}&nombre=${capitals[name]}&max=1`
-      );
-      const json = await res.json();
-      if (json.total === 0) {
-        navigate("/not-found", { replace: true });
-        return;
-      }
-
-      const locality = json.localidades[0];
-      setProvinceData((prev) => ({
-        ...prev,
-        name: locality.nombre,
-        centroide: locality.centroide,
-        id: locality.id,
-        province: locality.provincia?.nombre || "Sin provincia",
-        department: locality.departamento?.nombre || "Sin departamento",
-        municipality: locality.municipio?.nombre || "Sin municipio",
-      }));
-
-      // Fetch imagen
-      const wikiRes = await fetch(
-        `https://en.wikipedia.org/w/api.php?action=query&format=json&origin=*&prop=pageimages&titles=${encodeURIComponent(
-          name
-        )}&pithumbsize=400`
-      );
-      const imgData = await wikiRes.json();
-      const page = imgData.query.pages[Object.keys(imgData.query.pages)[0]];
-      setProvinceImage(
-        page.thumbnail?.source || `https://picsum.photos/seed/${name}/400/300`
-      );
-    } catch (error) {
-      console.error("Error al obtener datos:", error);
-    }
-  };
-
-  const fetchLocalities = async () => {
-    setFetching(true);
-    try {
-      const response = await fetch(
-        `https://apis.datos.gob.ar/georef/api/localidades?provincia=${encodeURIComponent(
-          name
-        )}&max=10&inicio=${currentFetchIndex}`
-      );
-      const data = await response.json();
-      setNewLocalities(data.localidades);
-      setCurrentFetchIndex((prev) => prev + 10); // Incrementar el índice para la próxima llamada
-    } catch (error) {
-      console.error("Error al obtener las localidades:", error);
-    }
-  };
-
-  // Para evitar la doble carga, se usa un useRef para controlar la primera carga
-  // de localidades. Se inicializa en false y se cambia a true después de la primera carga.
   useEffect(() => {
     const fetchAll = async () => {
-      await fetchProvinceData();
-      await fetchLocalities();
-      setLoading(false);
-    }
+      try {
+        const data = await fetchProvinceData(name, capitals, navigate);
+        setProvinceData(data);
+
+        const image = await fetchProvinceImage(name);
+        setProvinceImage(image);
+
+        const localities = await fetchLocalities(name, currentFetchIndex);
+        setNewLocalities(localities);
+
+        setLoading(false);
+      } catch (error) {
+        console.error("Error al cargar los datos:", error);
+      }
+    };
 
     if (!firstFetch.current) {
       fetchAll();
       firstFetch.current = true;
     }
-  }, []);
+  }, [name, currentFetchIndex, navigate]);
 
   useEffect(() => {
     const fetchEachNewLocality = async () => {
@@ -129,50 +87,16 @@ const Details = () => {
         return;
       }
       try {
-        const newLocalitiesInfo = await Promise.all(
-          newLocalities.map(async (localidad) => {
-            const response = await fetch(
-              `https://apis.datos.gob.ar/georef/api/localidades?id=${localidad.id}`
-            );
-            const data = await response.json();
-            const locality = data.localidades[0];
-
-            if (locality.centroide) {
-              const { lat, lon } = locality.centroide;
-
-              const weatherResponse = await fetch(
-                `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&lang=es&appid=${openWeatherKey}`
-              );
-              const weatherData = await weatherResponse.json();
-              locality.clima = weatherData;
-
-              const forecastResponse = await fetch(
-                `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&units=metric&lang=es&appid=${openWeatherKey}`
-              );
-              const forecastData = await forecastResponse.json();
-              locality.pronostico = forecastData.list[0];
-            }
-            return {
-              name: locality.nombre,
-              department: locality.departamento?.nombre || t("details.missing.department"),
-              municipality: locality.municipio?.nombre || t("details.missing.municipality"),
-              province: locality.provincia?.nombre || t("details.missing.province"),
-              id: locality.id,
-              weather: locality.clima || null,
-              forecast: locality.pronostico || null,
-            };
-          })
-        );
-        setCurrentLocalities((prev) => [...prev, ...newLocalitiesInfo]);
+        const localitiesInfo = await fetchLocalityDetails(newLocalities, t);
+        setCurrentLocalities((prev) => [...prev, ...localitiesInfo]);
         setFetching(false);
       } catch (error) {
-        console.error(
-          "Error al obtener la información de la localidad:",error
-        );
+        console.error("Error al obtener detalles de las localidades:", error);
       }
     };
+
     fetchEachNewLocality();
-  }, [newLocalities]);
+  }, [newLocalities, t]);
 
   useEffect(() => {
     if (navigator.geolocation && provinceData?.centroide) {
@@ -280,31 +204,33 @@ const Details = () => {
             </div>
           )}
 
-          {fetching && currentLocalities.length === 0 ? (
+          {fetching && currentLocalities.length === 0 
+          ? (
             <div className="flex justify-center bg-grey-200 bg-black text-white items-center h-80 gap-2 text-xl">
               <LoaderCircle className="animate-spin" />
               <p className="font-bold items-center">{t("details.loading.localities")}</p>
             </div>
-          ) : (
+          ) 
+          : (
             <>
               <List
                 items={currentLocalities}
                 emptyMessage={t("details.list.empty")}
                 title={null}
-                description={`${t("details.list.description", {
-                  name: name.toUpperCase(),
-                })}`}
+                description={`${t("details.list.description", { name: name.toUpperCase()})}`}
                 id="localidades"
                 onFavoriteClick={changeFavoritesState}
               />
               {
-                fetching ? (
+                fetching 
+                ? (
                   <button className="text-black cursor-not-allowed" disabled>
                     <LoaderCircle className="animate-spin text-black h-8 w-8" />
                   </button>
-                ) : (
+                ) 
+                : (
                   <button
-                    className="text-black border border-white z"
+                    className="text-white border border-white z"
                     onClick={fetchLocalities}
                   >
                     {t("details.button.load")}
