@@ -17,7 +17,7 @@ const Header = () => {
       <div className="px-4 py-3 flex items-center justify-between">
         {/* Logo + Home */}
         <div
-          className="flex items-center gap-2 hover:text-gray-300 transition cursor-pointer"
+          className="flex items-center gap-2 transition cursor-pointer hover:text-blue-300 dark:hover:text-blue-300"
           onClick={() => navigate("/")}
         >
           <img
@@ -31,10 +31,10 @@ const Header = () => {
         {/* Navegación */}
         <nav className="flex items-center  text-black space-x-6 ">
           <div
-            className="flex items-center gap-2 hover:text-blue-200 transition cursor-pointer"
+            className="flex items-center gap-2 transition cursor-pointer hover:text-blue-300 dark:hover:text-blue-300"
             onClick={() => navigate("/favorites")}
           >
-            <Star className="w-5 h-5" fill="yellow" />
+            <Star className="w-5 h-5 " fill="yellow" />
             <span className="text-xl font-semibold">
               {t("header.favorites")}
             </span>
@@ -42,7 +42,7 @@ const Header = () => {
 
           {/* Botón para cambiar idioma */}
           <div
-            className="flex items-center gap-2 hover:text-gray-300 transition cursor-pointer"
+            className="flex items-center gap-2 transition cursor-pointer hover:text-blue-300 dark:hover:text-blue-300"
             onClick={handleLanguageClick}
           >
             <Languages className="w-5 h-5 " strokeWidth={2} />
