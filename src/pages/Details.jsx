@@ -230,7 +230,7 @@ const Details = () => {
                 ) 
                 : (
                   <button
-                    className="text-white border border-white z"
+                    className="text-black border border-white z"
                     onClick={fetchLocalities}
                   >
                     {t("details.button.load")}
