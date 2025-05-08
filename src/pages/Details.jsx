@@ -16,28 +16,28 @@ import {
 
 const capitals = {
   "Buenos Aires": "La Plata",
-  "Catamarca": "San Fernando del Valle de Catamarca",
-  "Chaco": "Resistencia",
-  "Chubut": "Rawson",
-  "Córdoba": "Córdoba",
-  "Corrientes": "Corrientes",
+  Catamarca: "San Fernando del Valle de Catamarca",
+  Chaco: "Resistencia",
+  Chubut: "Rawson",
+  Córdoba: "Córdoba",
+  Corrientes: "Corrientes",
   "Entre Ríos": "Paraná",
-  "Formosa": "Formosa",
-  "Jujuy": "San Salvador de Jujuy",
+  Formosa: "Formosa",
+  Jujuy: "San Salvador de Jujuy",
   "La Pampa": "Santa Rosa",
   "La Rioja": "La Rioja",
-  "Mendoza": "Mendoza",
-  "Misiones": "Posadas",
-  "Neuquén": "Neuquén",
+  Mendoza: "Mendoza",
+  Misiones: "Posadas",
+  Neuquén: "Neuquén",
   "Río Negro": "Viedma",
-  "Salta": "Salta",
+  Salta: "Salta",
   "San Juan": "San Juan",
   "San Luis": "San Luis",
   "Santa Cruz": "Río Gallegos",
   "Santa Fe": "Santa Fe",
   "Santiago del Estero": "Santiago del Estero",
   "Tierra del Fuego, Antártida e Islas del Atlántico Sur": "Ushuaia",
-  "Tucumán": "San Miguel de Tucumán",
+  Tucumán: "San Miguel de Tucumán",
   "Ciudad Autónoma de Buenos Aires": "Buenos Aires",
 };
 
@@ -49,6 +49,7 @@ const Details = () => {
   const [newLocalities, setNewLocalities] = useState([]);
   const [currentLocalities, setCurrentLocalities] = useState([]);
   const [currentFetchIndex, setCurrentFetchIndex] = useState(0);
+  const [maxFetchIndex, setMaxFetchIndex] = useState(0);
   const [loading, setLoading] = useState(true);
   const [fetching, setFetching] = useState(false);
   const { t } = useTranslation();
@@ -65,15 +66,17 @@ const Details = () => {
         const image = await fetchProvinceImage(name);
         setProvinceImage(image);
 
-        const localities = await fetchLocalities(name, currentFetchIndex);
-        setNewLocalities(localities);
+        const localitiesInfo = await fetchLocalities(name, currentFetchIndex);
+        setNewLocalities(localitiesInfo.localities);
+        setCurrentFetchIndex((prev) => prev + 10);
+        setMaxFetchIndex(localitiesInfo.total);
 
         setLoading(false);
       } catch (error) {
         console.error("Error al cargar los datos:", error);
       }
     };
-
+    // Se utiliza useRef para evitar que se ejecute el fetch dos veces por el StrictMode de React
     if (!firstFetch.current) {
       fetchAll();
       firstFetch.current = true;
@@ -143,11 +146,10 @@ const Details = () => {
   };
 
   const handleLoadMoreClick = async () => {
-    const newFetchIndex = currentFetchIndex + 10;
-    setCurrentFetchIndex(newFetchIndex);
-    const localitiesInfo = await fetchLocalities(name, newFetchIndex);
-    setNewLocalities(localitiesInfo);
-  }
+    const localitiesInfo = await fetchLocalities(name, currentFetchIndex);
+    setNewLocalities(localitiesInfo.localities);
+    setCurrentFetchIndex((prev) => prev + 10);
+  };
 
   if (loading) {
     return (
@@ -155,7 +157,9 @@ const Details = () => {
         <Header />
         <main className="flex justify-center bg-grey-200 bg-black text-white items-center h-80 gap-2 text-xl">
           <LoaderCircle className="animate-spin" />
-          <p className="font-bold items-center">{t("details.loading.information")}</p>
+          <p className="font-bold items-center">
+            {t("details.loading.information")}
+          </p>
         </main>
         <Footer />
       </>
@@ -182,10 +186,12 @@ const Details = () => {
 
           <div className="text-center mt-1 space-y-1">
             <p>
-              <strong>{t("details.latitude")}:</strong> {provinceData.centroide.lat}
+              <strong>{t("details.latitude")}:</strong>{" "}
+              {provinceData.centroide.lat}
             </p>
             <p>
-              <strong>{t("details.longitude")}:</strong> {provinceData.centroide.lon}
+              <strong>{t("details.longitude")}:</strong>{" "}
+              {provinceData.centroide.lon}
             </p>
             {provinceCapitalDistance && (
               <p className="text-blue-700 font-semibold mt-2">
@@ -200,51 +206,75 @@ const Details = () => {
           {provinceData?.centroide && (
             <div className="h-96 w-full max-w-3xl mx-auto mt-8 ">
               <MapContainer
-                center={[provinceData.centroide.lat, provinceData.centroide.lon]}
+                center={[
+                  provinceData.centroide.lat,
+                  provinceData.centroide.lon,
+                ]}
                 zoom={10}
                 className="h-full w-full rounded shadow z-0"
               >
                 <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-                <Marker position={[provinceData.centroide.lat, provinceData.centroide.lon]}>
+                <Marker
+                  position={[
+                    provinceData.centroide.lat,
+                    provinceData.centroide.lon,
+                  ]}
+                >
                   <Popup>{name}</Popup>
                 </Marker>
               </MapContainer>
             </div>
           )}
 
-          {fetching && currentLocalities.length === 0 
-          ? (
+          {fetching && currentLocalities.length === 0 ? (
             <div className="flex justify-center bg-grey-200 bg-black text-white items-center h-80 gap-2 text-xl">
               <LoaderCircle className="animate-spin" />
-              <p className="font-bold items-center">{t("details.loading.localities")}</p>
+              <p className="font-bold items-center">
+                {t("details.loading.localities")}
+              </p>
             </div>
-          ) 
-          : (
+          ) : (
             <>
               <List
                 items={currentLocalities}
                 emptyMessage={t("details.list.empty")}
                 title={null}
-                description={`${t("details.list.description", { name: name.toUpperCase()})}`}
+                description={`${t("details.list.description", {
+                  name: name.toUpperCase(),
+                })}`}
                 id="localidades"
                 onFavoriteClick={changeFavoritesState}
               />
-              {
-                fetching 
-                ? (
-                  <button className="px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-900 hover:bg-gray-700 dark:hover:bg-gray-700 transition cursor-not-allowed" disabled>
-                    <LoaderCircle className="animate-spin text-gray-900 dark:text-gray-400 h-8 w-8" />
-                  </button>
-                ) 
-                : (
-                  <button
-                    className="px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-900 hover:bg-gray-700 dark:hover:bg-gray-700 transition cursor-pointer"
-                    onClick={handleLoadMoreClick}
-                  >
-                    {t("details.button.load")}
-                  </button>
-                )
-              }
+              {currentFetchIndex < maxFetchIndex ? (
+                <>
+                  {fetching ? (
+                    <button
+                      className="px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-900 hover:bg-gray-700 dark:hover:bg-gray-700 transition cursor-not-allowed"
+                      disabled
+                    >
+                      <LoaderCircle className="animate-spin text-gray-900 dark:text-gray-400 h-8 w-8" />
+                    </button>
+                  ) : (
+                    <button
+                      className="px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-900 hover:bg-gray-700 dark:hover:bg-gray-700 transition cursor-pointer"
+                      onClick={handleLoadMoreClick}
+                    >
+                      {t("details.button.load")}
+                    </button>
+                  )}
+                </>
+              ) : (
+                <>
+                  {fetching && (
+                    <button
+                      className="px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-900 hover:bg-gray-700 dark:hover:bg-gray-700 transition cursor-not-allowed"
+                      disabled
+                    >
+                      <LoaderCircle className="animate-spin text-gray-900 dark:text-gray-400 h-8 w-8" />
+                    </button>
+                  )}
+                </>
+              )}
             </>
           )}
         </div>
@@ -252,7 +282,6 @@ const Details = () => {
       <Footer />
     </>
   );
-
 };
 
 export default Details;
