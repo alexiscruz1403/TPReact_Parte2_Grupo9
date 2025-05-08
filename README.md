@@ -10,6 +10,8 @@
 
 ## Explicación de la aplicación
 
+* Es una plataforma interactiva diseñada para explorar las provincias de Argentina, enfocándose en destacar las mejores opciones para viajar en auto mientras se disfruta de unos mates. Los usuarios pueden navegar por las provincias recomendadas, ver detalles específicos de cada una, guardar localidades como favoritas y explorar información adicional como el clima y la distancia desde su ubicación actual.
+* El objetivo de la aplicación es proporcionar una experiencia enriquecedora para los usuarios interesados en viajar por Argentina, ayudándolos a descubrir provincias, localidades y detalles relevantes para planificar sus viajes. 🧉
 
 ## Instrucciones de instalacion
 
