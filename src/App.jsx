@@ -13,7 +13,7 @@ function App() {
         <Route path='/' element={<Home/>}></Route>
         <Route path='/details/:name' element={<Details/>}></Route>
         <Route path='/favorites' element={<Favorites/>}></Route>
-        <Route path="*" element={<NotFound />} /> {/* Ruta comodín para el error 404 */}
+        <Route path="*" element={<notFound />} /> {/* Ruta comodín para el error 404 */}
       </Routes>
   </Router>
   )
