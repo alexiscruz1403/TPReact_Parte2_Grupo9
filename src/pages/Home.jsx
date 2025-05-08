@@ -1,21 +1,21 @@
-import { useTranslation } from "react-i18next";
-import { fetchProvincias, searchProvincias } from "../services/apiService";
 import Header from "../components/header/Header";
 import Footer from "../components/footer/Footer";
 import List from "../components/list/List";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
+import { fetchProvinces, searchProvinces } from "../services/apiService";
 import { LoaderCircle, SearchX } from "lucide-react";
 
 const Home = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const [provincias, setProvincias] = useState([]);
+  const [provinces, setProvinces] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResults, setSearchResults] = useState([]);
 
-  const topProvincias = [
+  const topProvinces = [
     "Salta",
     "Jujuy",
     "Mendoza",
@@ -31,8 +31,8 @@ const Home = () => {
   useEffect(() => {
     const loadProvincias = async () => {
       try {
-        const provinciasConDatos = await fetchProvincias(topProvincias);
-        setProvincias(provinciasConDatos);
+        const provincesData = await fetchProvinces(topProvinces);
+        setProvinces(provincesData);
       } catch (error) {
         console.error("Error al obtener las provincias:", error);
       } finally {
@@ -43,8 +43,8 @@ const Home = () => {
     loadProvincias();
   }, []);
 
-  const handleNavigate = (provincia) => {
-    navigate(`/details/${encodeURIComponent(provincia.nombre)}`);
+  const handleNavigate = (province) => {
+    navigate(`/details/${encodeURIComponent(province.name)}`);
   };
 
   const handleSearch = async (e) => {
@@ -54,8 +54,8 @@ const Home = () => {
     if (term.length > 3) {
       setLoading(true);
       try {
-        const provinciasConDatos = await searchProvincias(term);
-        setSearchResults(provinciasConDatos);
+        const provincesData = await searchProvinces(term);
+        setSearchResults(provincesData);
       } catch (error) {
         console.error("Error al buscar provincias:", error);
       } finally {
@@ -101,7 +101,7 @@ const Home = () => {
             </div>
           ) : (
             <List
-              items={searchResults.length > 0 ? searchResults : provincias}
+              items={searchResults.length > 0 ? searchResults : provinces}
               emptyMessage={t("home.list.empty")}
               title={t("home.list.title")}
               description={t("home.list.description")}

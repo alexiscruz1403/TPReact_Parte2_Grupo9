@@ -1,4 +1,3 @@
-import React from "react";
 import Card from "../card/Card";
 import { Lightbulb } from "lucide-react";
 
@@ -19,13 +18,14 @@ const List = ({ items, emptyMessage, title=null, description, id, onItemClick, o
             <Card
               key={item.id}
               id={item.id}
-              nombre={item.nombre}
-              departamento={item.departamento}
-              municipio={item.municipio}
-              provincia={item.provincia}
-              clima={item.clima}
-              imagen={item.imagen}
-              onClick={() => onItemClick(item)}
+              name={item.name}
+              department={item.department}
+              municipality={item.municipality}
+              province={item.province}
+              weather={item.weather}
+              forecast={item.forecast}
+              image={item.image}
+              onCardClick={onItemClick}
               onFavoriteClick={onFavoriteClick}
             />
           ))}

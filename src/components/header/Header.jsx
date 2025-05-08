@@ -1,22 +1,16 @@
-import React from "react";
-import { Star } from "lucide-react";
-import { Languages } from "lucide-react";
-
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { Star, Languages } from "lucide-react";
 
 const Header = () => {
   const { t, i18n } = useTranslation();
   const navigate = useNavigate();
 
-  const handleClick = () => {
+  const handleLanguageClick = () => {
     const newLang = i18n.language === "en" ? "es" : "en";
     i18n.changeLanguage(newLang);
     localStorage.setItem("language", newLang);
   };
-
-  const [isOpen, setIsOpen] = React.useState(false);
-  const toggleMenu = () => setIsOpen(!isOpen);
 
   return (
     <header className="w-full z-10 top-0 bg-orange-500 text-black py-2 sticky">
@@ -49,7 +43,7 @@ const Header = () => {
           {/* Botón para cambiar idioma */}
           <div
             className="flex items-center gap-2 hover:text-gray-300 transition cursor-pointer"
-            onClick={handleClick}
+            onClick={handleLanguageClick}
           >
             <Languages className="w-5 h-5 " strokeWidth={2} />
             <span className="text-xl font-semibold">

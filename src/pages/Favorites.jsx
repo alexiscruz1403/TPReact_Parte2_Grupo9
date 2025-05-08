@@ -1,28 +1,28 @@
-import { useState, useEffect } from "react";
 import Header from "../components/header/Header";
 import Footer from "../components/footer/Footer";
 import List from "../components/list/List";
+import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 
 const Favorites = () => {
   const { t } = useTranslation();
-  const [favoritos, setFavoritos] = useState(JSON.parse(localStorage.getItem("favoritos")) || []);
+  const [favorites, setFavorites] = useState(JSON.parse(localStorage.getItem("favorites")) || []);
 
-  const updateFavoritos = (localidad) => {
-    const storedFavoritos = JSON.parse(localStorage.getItem("favoritos")) || [];
-     if(storedFavoritos.some((item) => item.id === localidad.id)) {
-       const nuevosFavoritos = storedFavoritos.filter((item) => item.id !== localidad.id);
-      setFavoritos(nuevosFavoritos);
+  const updateFavorites = (locality) => {
+    const storedFavorites = JSON.parse(localStorage.getItem("favorites")) || [];
+    if(storedFavorites.some((item) => item.id === locality.id)) {
+      const newFavorites = storedFavorites.filter((item) => item.id !== locality.id);
+      setFavorites(newFavorites);
     }
     else {
-      const nuevosFavoritos = [...storedFavoritos, localidad];
-     setFavoritos(nuevosFavoritos);
+      const newFavorites = [...storedFavorites, locality];
+      setFavorites(newFavorites);
     }
   };
 
   useEffect(() => {
-    localStorage.setItem("favoritos", JSON.stringify(favoritos));
-  }, [favoritos]);
+    localStorage.setItem("favorites", JSON.stringify(favorites));
+  }, [favorites]);
 
   return (
     <div className="flex flex-col justify-between min-h-screen">
@@ -32,7 +32,7 @@ const Favorites = () => {
           <p className="text-3xl font-bold text-center mt-6">
             {t("favorites.title")}
           </p>
-          <List items={favoritos} emptyMessage={t("favorites.empty")} onFavoriteClick={updateFavoritos}/>
+          <List items={favorites} emptyMessage={t("favorites.empty")} onFavoriteClick={updateFavorites}/>
         </div>
       </main>
       <Footer />
