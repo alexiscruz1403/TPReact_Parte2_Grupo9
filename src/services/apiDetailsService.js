@@ -29,6 +29,8 @@ export const fetchProvinceData = async (name, capitals, navigate) => {
 
 export const fetchProvinceImage = async (name) => {
   try {
+    // Fetch imagen de Wikipedia
+    // Si no hay imagen, se usa una imagen aleatoria de Lorem Picsum
     const wikiRes = await fetch(
       `https://en.wikipedia.org/w/api.php?action=query&format=json&origin=*&prop=pageimages&titles=${encodeURIComponent(
         name
@@ -47,13 +49,18 @@ export const fetchProvinceImage = async (name) => {
 
 export const fetchLocalities = async (name, currentFetchIndex) => {
   try {
+    // Fetch localidades de la provincia
+    // Se muestran primero 10 localidades y luego se van cargando más al hacer click en "Cargar más"
     const response = await fetch(
       `https://apis.datos.gob.ar/georef/api/localidades?provincia=${encodeURIComponent(
         name
       )}&max=10&inicio=${currentFetchIndex}`
     );
     const data = await response.json();
-    return data.localidades;
+    return {
+      total: data.total,
+      localities: data.localidades
+    };
   } catch (error) {
     console.error("Error al obtener las localidades:", error);
     throw error;
@@ -64,6 +71,7 @@ export const fetchLocalityDetails = async (localities, t) => {
   try {
     const localitiesInfo = await Promise.all(
       localities.map(async (locality) => {
+        // Fetch para obtener los detalles de la localidad
         const response = await fetch(
           `https://apis.datos.gob.ar/georef/api/localidades?id=${locality.id}`
         );
@@ -73,12 +81,14 @@ export const fetchLocalityDetails = async (localities, t) => {
         if (detailedLocality.centroide) {
           const { lat, lon } = detailedLocality.centroide;
 
+          // Fetch para obtener el clima
           const weatherResponse = await fetch(
             `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&lang=es&appid=${openWeatherKey}`
           );
           const weatherData = await weatherResponse.json();
           detailedLocality.clima = weatherData;
 
+          // Fetch para obtener el pronóstico
           const forecastResponse = await fetch(
             `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&units=metric&lang=es&appid=${openWeatherKey}`
           );
