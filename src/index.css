@@ -65,15 +65,7 @@ button:focus-visible {
   }
 }
   
-  /* Ara fijate si podes manejar el tema de los colores desde aca, configurando
-    el color de fondo y el color del texto, en vez de hacerlo desde el tailwind con clases, 
-    manejarlo aca con prefers-color-scheme: light/dark 
-    Porque, por ej, yo veo los hovers en blanco ahora y no me deja ver las 
-    letras de las tarjetas
-    Entonces para el modo oscuro, el color de las letras en las cards debe
-     ser negro y el fondo blanco, y para el modo claro, el color de las letras
-      en las cards debe ser blanco/ o el que se vea bien.
-    */
+  
   
 
 

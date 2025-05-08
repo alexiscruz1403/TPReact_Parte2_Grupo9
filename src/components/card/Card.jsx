@@ -27,7 +27,7 @@ const Card = ({ id, name, province = null, department = null, municipality = nul
 
   return (
     <div
-      className="relative p-4 bg-orange-400 text-gray-900 rounded-lg shadow-md  hover:text-white hover:bg-orange-800  transition"
+      className="relative p-4 bg-orange-400 text-gray-900 rounded-lg shadow-md hover:text-white hover:bg-orange-800 transition"
       onClick={handleCardClick}
     >
       {image && <img src={image} alt={name} className="w-full h-48 object-cover rounded-t-lg" />}
