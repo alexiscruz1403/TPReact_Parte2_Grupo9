@@ -194,7 +194,7 @@ const Details = () => {
               {provinceData.centroide.lon}
             </p>
             {provinceCapitalDistance && (
-              <p className="text-blue-700 font-semibold mt-2">
+              <p className="text-orange-400 font-semibold mt-2">
                 {t("details.distance", {
                   distance: provinceCapitalDistance,
                   name: name,
