@@ -94,8 +94,8 @@ const Home = () => {
             </div>
           ) : searchResults.length === 0 && searchTerm.length > 3 ? (
             <div className="flex flex-col items-center mt-6">
-              <SearchX className="text-gray-500 text-4xl mb-2" />
-              <p className="text-lg text-gray-600">
+              <SearchX className="text-orange-300 text-4xl mb-2" />
+              <p className="text-lg text-orange-300">
                 No se encontraron resultados para "{searchTerm}".
               </p>
             </div>
