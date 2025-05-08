@@ -27,7 +27,7 @@ const Card = ({ id, name, province = null, department = null, municipality = nul
 
   return (
     <div
-      className="relative p-4 bg-orange-400 text-gray-900 rounded-lg shadow-md hover:text-white hover:bg-orange-800 transition"
+      className="relative p-4 bg-orange-400 text-gray-900 rounded-lg shadow-md hover:text-white hover:bg-orange-800 transition cursor-pointer"
       onClick={handleCardClick}
     >
       {image && <img src={image} alt={name} className="w-full h-48 object-cover rounded-t-lg" />}
@@ -41,9 +41,9 @@ const Card = ({ id, name, province = null, department = null, municipality = nul
             <div className=" h-10 w-10 rounded-md absolute  top-1 right-1 flex items-center justify-center" onClick={handleFavoriteClick}>
               {
                 isFavorite ? (
-                  <Star className="h-5 w-5" color='black' fill="yellow" />
+                  <Star className="h-6 w-6" color='black' fill="yellow" />
                 ) : (
-                  <Star className="h-5 w-5" color='black' fill=""/>
+                  <Star className="h-6 w-6" color='black' fill=""/>
                 )
               }
             </div>

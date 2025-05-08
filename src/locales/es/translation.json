@@ -67,5 +67,9 @@
     "button": {
       "load": "Cargar más"
     }
+  },
+  "notFound": {
+    "title": "Error 404",
+    "description": "La página que estás buscando no existe."
   }
 }
