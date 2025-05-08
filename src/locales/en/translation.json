@@ -40,7 +40,10 @@
     "temperature": "Temperature"
   },
   "details": {
-    "loading": "Loading information, please wait...",
+    "loading": {
+      "information": "Loading information, please wait...",
+      "localities": "Loading localities, please wait..."
+    },
     "title": "PROVINCE OF {{name}}",
     "province": "Province",
     "department": "Department",
@@ -54,6 +57,9 @@
       "title": "PROVINCE OF {{name}}",
       "description": "Localities of {{name}}",
       "empty": "No localities available at the moment."
+    },
+    "button": {
+      "load": "Load more"
     }
   }
 }

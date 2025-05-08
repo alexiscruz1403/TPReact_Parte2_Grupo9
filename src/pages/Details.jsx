@@ -7,8 +7,36 @@ import List from "../components/list/List";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import { LoaderCircle } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const openWeatherKey = "71b490fede18d724d47d0ba570379320";
+
+const capitalesArgentina = {
+  "Buenos Aires": "La Plata",
+  "Catamarca": "San Fernando del Valle de Catamarca",
+  "Chaco": "Resistencia",
+  "Chubut": "Rawson",
+  "Córdoba": "Córdoba",
+  "Corrientes": "Corrientes",
+  "Entre Ríos": "Paraná",
+  "Formosa": "Formosa",
+  "Jujuy": "San Salvador de Jujuy",
+  "La Pampa": "Santa Rosa",
+  "La Rioja": "La Rioja",
+  "Mendoza": "Mendoza",
+  "Misiones": "Posadas",
+  "Neuquén": "Neuquén",
+  "Río Negro": "Viedma",
+  "Salta": "Salta",
+  "San Juan": "San Juan",
+  "San Luis": "San Luis",
+  "Santa Cruz": "Río Gallegos",
+  "Santa Fe": "Santa Fe",
+  "Santiago del Estero": "Santiago del Estero",
+  "Tierra del Fuego, Antártida e Islas del Atlántico Sur": "Ushuaia",
+  "Tucumán": "San Miguel de Tucumán",
+  "Ciudad Autónoma de Buenos Aires": "Buenos Aires"
+};
 
 const Details = () => {
   const { nombre } = useParams();
@@ -20,15 +48,52 @@ const Details = () => {
   const [fetching, setFetching] = useState(false);
   
   const [data, setData] = useState(null);
-  // const [clima, setClima] = useState(null);
-  const [pronostico, setPronostico] = useState(null);
   const [imagen, setImagen] = useState(null);
-  // const [userCoords, setUserCoords] = useState(null);
   const [distance, setDistance] = useState(null);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
+  const fetchData = async () => {
+    try {
+      // Fetch localidad principal
+      const res = await fetch(
+        `https://apis.datos.gob.ar/georef/api/localidades?provincia=${nombre}&nombre=${capitalesArgentina[nombre]}&max=1`
+      );
+      const json = await res.json();
+      if (json.total === 0) {
+        navigate("/not-found", { replace: true });
+        return;
+      }
+
+      const localidad = json.localidades[0];
+      setData((prev) => ({
+        ...prev,
+        nombre: localidad.nombre,
+        centroide: localidad.centroide,
+        id: localidad.id,
+        provincia: localidad.provincia?.nombre || "Sin provincia",
+        departamento: localidad.departamento?.nombre || "Sin departamento",
+        municipio: localidad.municipio?.nombre || "Sin municipio",
+      }));
+
+      // Fetch imagen
+      const wikiRes = await fetch(
+        `https://en.wikipedia.org/w/api.php?action=query&format=json&origin=*&prop=pageimages&titles=${encodeURIComponent(
+          nombre
+        )}&pithumbsize=400`
+      );
+      const imgData = await wikiRes.json();
+      const page = imgData.query.pages[Object.keys(imgData.query.pages)[0]];
+      setImagen(
+        page.thumbnail?.source || `https://picsum.photos/seed/${nombre}/400/300`
+      );
+    } catch (error) {
+      console.error("Error al obtener datos:", error);
+    }
+  };
 
   const fetchLocalidades = async () => {
+    setFetching(true);
     try {
       const response = await fetch(
         `https://apis.datos.gob.ar/georef/api/localidades?provincia=${encodeURIComponent(
@@ -36,7 +101,7 @@ const Details = () => {
         )}&max=10&inicio=${nextFetch}`
       );
       const data = await response.json();
-      setLocalidades((prev) => [...prev, ...(data.localidades || [])]);
+      setLocalidades(data.localidades);
       setNextFetch((prev) => prev + 10); // Incrementar el índice para la próxima llamada
     } catch (error) {
       console.error("Error al obtener las localidades:", error);
@@ -46,20 +111,27 @@ const Details = () => {
   // Para evitar la doble carga, se usa un useRef para controlar la primera carga
   // de localidades. Se inicializa en false y se cambia a true después de la primera carga.
   useEffect(() => {
+    const fetchAll = async () => {
+      await fetchData();
+      await fetchLocalidades();
+      setLoading(false);
+    }
+
     if (!firstFetch.current) {
-      fetchLocalidades();
+      fetchAll();
       firstFetch.current = true;
     }
   }, []);
 
   useEffect(() => {
     const fetchInfoLocalidad = async () => {
-      const nuevasLocalidades = localidades.filter(
-        (localidad) => !items.some((item) => item.id === localidad.id)
-      );
+      if (localidades.length === 0) {
+        setFetching(false);
+        return;
+      }
       try {
         const newItems = await Promise.all(
-          nuevasLocalidades.map(async (localidad) => {
+          localidades.map(async (localidad) => {
             const response = await fetch(
               `https://apis.datos.gob.ar/georef/api/localidades?id=${localidad.id}`
             );
@@ -68,13 +140,13 @@ const Details = () => {
 
             if (loc.centroide) {
               const { lat, lon } = loc.centroide;
-    
+
               const climaRes = await fetch(
                 `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&lang=es&appid=${openWeatherKey}`
               );
               const dataClima = await climaRes.json();
               loc.clima = dataClima;
-    
+
               const forecastRes = await fetch(
                 `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&units=metric&lang=es&appid=${openWeatherKey}`
               );
@@ -89,7 +161,7 @@ const Details = () => {
               provincia: loc.provincia?.nombre || "Sin provincia",
               id: loc.id,
               clima: loc.clima || null,
-              pronostico: loc.diario || null
+              pronostico: loc.diario || null,
             };
           })
         );
@@ -106,46 +178,9 @@ const Details = () => {
   }, [localidades]);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        // Fetch localidad principal
-        const res = await fetch(
-          `https://apis.datos.gob.ar/georef/api/localidades?provincia=${nombre}&max=1`
-        );
-        const data = await res.json();
-        if (data.total === 0) {
-          navigate("/not-found", { replace: true });
-          return;
-        }
-        const localidad = data.localidades[0];
-        setData(localidad);
-
-        // Fetch imagen
-        const wikiRes = await fetch(
-          `https://en.wikipedia.org/w/api.php?action=query&format=json&origin=*&prop=pageimages&titles=${encodeURIComponent(
-            nombre
-          )}&pithumbsize=400`
-        );
-        const imgData = await wikiRes.json();
-        const page = imgData.query.pages[Object.keys(imgData.query.pages)[0]];
-        setImagen(
-          page.thumbnail?.source ||
-            `https://picsum.photos/seed/${nombre}/400/300`
-        );
-        setLoading(false);
-      } catch (error) {
-        console.error("Error al obtener datos:", error);
-      }
-    };
-
-    fetchData();
-  }, [nombre]);
-
-  useEffect(() => {
     if (navigator.geolocation && data?.centroide) {
       navigator.geolocation.getCurrentPosition((pos) => {
         const { latitude, longitude } = pos.coords;
-        setUserCoords({ lat: latitude, lon: longitude });
 
         const km = getDistanceFromLatLonInKm(
           latitude,
@@ -191,7 +226,7 @@ const Details = () => {
         <Header />
         <main className="flex justify-center bg-grey-200 bg-black text-white items-center h-80 gap-2 text-xl">
           <LoaderCircle className="animate-spin" />
-          <p className="font-bold items-center">{t("details.loading")}</p>
+          <p className="font-bold items-center">{t("details.loading.information")}</p>
         </main>
         <Footer />
       </>
@@ -202,7 +237,7 @@ const Details = () => {
     <>
       <Header />
       <main className="flex-grow bg-black text-white px-4 py-4 min-h-screen p-8">
-        <div classeName="bg-black min-h-screen p-8">
+        <div className="bg-black min-h-screen p-8">
           <h1 className="text-2xl font-bold text-center mb-5">
             {t("details.title", { name: nombre.toUpperCase() })}
           </h1>
@@ -216,7 +251,7 @@ const Details = () => {
             </div>
           )}
 
-          <div className="text-center space-y-1 mt-4">
+          <div className="text-center mt-1 space-y-1">
             <p>
               <strong>{t("details.latitude")}:</strong> {data.centroide.lat}
             </p>
@@ -233,35 +268,6 @@ const Details = () => {
             )}
           </div>
 
-          {pronostico && (
-            <div>
-              <h2 className="text-xl font-semibold mb-2 text-center">
-                {t("details.forecast")}
-              </h2>
-              <div className="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-5 gap-4 justify-center">
-                {pronostico.map((dia, idx) => (
-                  <div
-                    key={idx}
-                    className="bg-orange-300 text-white p-4 rounded shadow text-center"
-                  >
-                    <p className="font-semibold">
-                      {new Date(dia.dt * 1000).toLocaleDateString("es-ES", {
-                        weekday: "long",
-                        day: "numeric",
-                        month: "short",
-                      })}
-                    </p>
-                    <img
-                      src={`https://openweathermap.org/img/wn/${dia.weather[0].icon}@2x.png`}
-                      alt="icono"
-                      className="mx-auto h-12"
-                    />
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
-
           {data?.centroide && (
             <div className="h-96 w-full max-w-3xl mx-auto mt-8 ">
               <MapContainer
@@ -277,40 +283,45 @@ const Details = () => {
             </div>
           )}
 
-          <List
-            items={items}
-            emptyMessage={t("details.list.empty")}
-            title={null}
-            description={`${t("details.list.description", {
-              name: nombre.toUpperCase(),
-            })}`}
-            id="localidades"
-            onFavoriteClick={changeFavoritesState}
-          />
-          {
-            fetching 
-            ? (
-                <button className="text-white cursor-not-allowed" disabled>
-                  <LoaderCircle className="animate-spin text-white h-8 w-8" />
-                </button>
-            )
-            : (
-                <button 
-                  className="text-white border border-white z"
-                  onClick={() => {
-                  setFetching(true);
-                  fetchLocalidades();
-                }}
-                >
-                  Cargar mas
-                </button>
-            )
-          }
+          {fetching && items.length === 0 ? (
+            <div className="flex justify-center bg-grey-200 bg-black text-white items-center h-80 gap-2 text-xl">
+              <LoaderCircle className="animate-spin" />
+              <p className="font-bold items-center">{t("details.loading.localities")}</p>
+            </div>
+          ) : (
+            <>
+              <List
+                items={items}
+                emptyMessage={t("details.list.empty")}
+                title={null}
+                description={`${t("details.list.description", {
+                  name: nombre.toUpperCase(),
+                })}`}
+                id="localidades"
+                onFavoriteClick={changeFavoritesState}
+              />
+              {
+                fetching ? (
+                  <button className="text-white cursor-not-allowed" disabled>
+                    <LoaderCircle className="animate-spin text-white h-8 w-8" />
+                  </button>
+                ) : (
+                  <button
+                    className="text-white border border-white z"
+                    onClick={fetchLocalidades}
+                  >
+                    {t("details.button.load")}
+                  </button>
+                )
+              }
+            </>
+          )}
         </div>
       </main>
       <Footer />
     </>
   );
+
 };
 
 export default Details;

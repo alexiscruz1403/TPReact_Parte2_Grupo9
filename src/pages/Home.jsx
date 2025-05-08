@@ -89,7 +89,7 @@ const Home = () => {
             <div className="flex gap-1 items-center justify-center">
               <LoaderCircle className="h-6 w-6 animate-spin" />
               <p className="text-center text-lg font-semibold">
-                {t("details.loading")}
+                {t("details.loading.information")}
               </p>
             </div>
           ) : searchResults.length === 0 && searchTerm.length > 3 ? (
