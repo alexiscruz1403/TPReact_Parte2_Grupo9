@@ -59,7 +59,7 @@
       "empty": "No localities available at the moment."
     },
     "missing":{
-      "micipality": "No municipality",
+      "municipality": "No municipality",
       "department": "No department",
       "province": "No province"
     },
