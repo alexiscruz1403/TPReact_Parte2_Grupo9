@@ -78,7 +78,7 @@ const Details = () => {
       fetchAll();
       firstFetch.current = true;
     }
-  }, [name, currentFetchIndex, navigate]);
+  }, []);
 
   useEffect(() => {
     const fetchEachNewLocality = async () => {
@@ -86,6 +86,7 @@ const Details = () => {
         setFetching(false);
         return;
       }
+      setFetching(true);
       try {
         const localitiesInfo = await fetchLocalityDetails(newLocalities, t);
         setCurrentLocalities((prev) => [...prev, ...localitiesInfo]);
@@ -96,7 +97,7 @@ const Details = () => {
     };
 
     fetchEachNewLocality();
-  }, [newLocalities, t]);
+  }, [newLocalities]);
 
   useEffect(() => {
     if (navigator.geolocation && provinceData?.centroide) {
@@ -140,6 +141,13 @@ const Details = () => {
       localStorage.setItem("favorites", JSON.stringify(updatedFavorites));
     }
   };
+
+  const handleLoadMoreClick = async () => {
+    const nextIndex = currentFetchIndex + 10;
+    setCurrentFetchIndex(nextIndex);
+    const localitiesFetched = await fetchLocalities(name, nextIndex);
+    setNewLocalities(localitiesFetched);
+  }
 
   if (loading) {
     return (
@@ -231,7 +239,7 @@ const Details = () => {
                 : (
                   <button
                     className="text-black border border-white z"
-                    onClick={fetchLocalities}
+                    onClick={handleLoadMoreClick}
                   >
                     {t("details.button.load")}
                   </button>
